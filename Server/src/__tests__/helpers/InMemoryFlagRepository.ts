@@ -70,4 +70,33 @@ export class InMemoryFlagRepository implements IFlagRepository {
   async getFlagStatesByEnvironment(environmentId: string): Promise<FlagState[]> {
     return this.flagStates.filter((s) => s.environmentId === environmentId);
   }
+
+  async upsertFlagState(
+    featureId: string,
+    environmentId: string,
+    enabled: boolean,
+    updatedBy: string | null,
+  ): Promise<FlagState> {
+    const existing = this.flagStates.find(
+      (s) => s.featureId === featureId && s.environmentId === environmentId,
+    );
+
+    if (existing) {
+      existing.enabled = enabled;
+      existing.updatedBy = updatedBy;
+      existing.updatedAt = new Date();
+      return { ...existing };
+    }
+
+    const newState: FlagState = {
+      id: `state-${crypto.randomUUID()}`,
+      enabled,
+      featureId,
+      environmentId,
+      updatedAt: new Date(),
+      updatedBy,
+    };
+    this.flagStates.push(newState);
+    return { ...newState };
+  }
 }

@@ -98,4 +98,61 @@ export interface IFlagRepository {
    * Get all flag states for a given environment.
    */
   getFlagStatesByEnvironment(environmentId: string): Promise<FlagState[]>;
+
+  /**
+   * Upsert a flag state for a given feature and environment.
+   * Creates or updates the FlagState record and returns the result.
+   */
+  upsertFlagState(
+    featureId: string,
+    environmentId: string,
+    enabled: boolean,
+    updatedBy: string | null,
+  ): Promise<FlagState>;
+}
+
+// --- Pub/Sub Event Types ---
+
+/**
+ * Payload broadcast via Redis Pub/Sub when a flag state changes.
+ * Subscribers (WebSocket gateways, other server instances) use this
+ * to push real-time updates to connected clients.
+ *
+ * See: docs/adr/004-redis-pubsub-flag-sync.md
+ */
+export interface FlagUpdateEvent {
+  /** The project this flag belongs to */
+  projectId: string;
+  /** The environment where the state changed */
+  environmentId: string;
+  /** The feature key that was toggled */
+  featureKey: string;
+  /** The new enabled/disabled value */
+  enabled: boolean;
+  /** Who triggered the change (user ID, API key, "system") */
+  source: string;
+  /** ISO 8601 timestamp of the change */
+  timestamp: string;
+}
+
+// --- Pub/Sub Service Interface ---
+
+/**
+ * Contract for publishing flag update events.
+ *
+ * Architecture: Defined in the Model layer (dependency inversion)
+ * so Services depend on the interface, not the concrete Redis class.
+ * This enables testing with a mock/spy IPubSubService.
+ */
+export interface IPubSubService {
+  /**
+   * Publish a flag update event to the real-time channel.
+   * Returns the number of subscribers that received the message.
+   */
+  publishFlagUpdate(event: FlagUpdateEvent): Promise<number>;
+
+  /**
+   * Gracefully close the underlying connection (Redis client).
+   */
+  disconnect(): Promise<void>;
 }

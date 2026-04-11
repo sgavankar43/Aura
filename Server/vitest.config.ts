@@ -13,7 +13,9 @@ export default defineConfig({
       exclude: [
         'src/**/*.test.ts',
         'src/**/__tests__/**',
-        'src/index.ts', // Entry point — just wires things together
+        'src/index.ts',           // Entry point — just wires things together
+        'src/repositories/**',    // Prisma wrappers — integration tested, not unit tested
+        'src/models/**',          // Pure type definitions — no runtime code
       ],
       thresholds: {
         branches: 80,

@@ -66,4 +66,30 @@ export class FlagRepository implements IFlagRepository {
       where: { environmentId },
     });
   }
+
+  async upsertFlagState(
+    featureId: string,
+    environmentId: string,
+    enabled: boolean,
+    updatedBy: string | null,
+  ): Promise<FlagState> {
+    return this.prisma.flagState.upsert({
+      where: {
+        featureId_environmentId: {
+          featureId,
+          environmentId,
+        },
+      },
+      update: {
+        enabled,
+        updatedBy,
+      },
+      create: {
+        featureId,
+        environmentId,
+        enabled,
+        updatedBy,
+      },
+    });
+  }
 }
