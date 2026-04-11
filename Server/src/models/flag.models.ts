@@ -109,6 +109,13 @@ export interface IFlagRepository {
     enabled: boolean,
     updatedBy: string | null,
   ): Promise<FlagState>;
+
+  /**
+   * Get a project by its API key.
+   * Used for WebSocket handshake authentication.
+   * Returns null if no project matches the key or the project is archived.
+   */
+  getProjectByApiKey(apiKey: string): Promise<Project | null>;
 }
 
 // --- Pub/Sub Event Types ---

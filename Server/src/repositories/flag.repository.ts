@@ -10,6 +10,7 @@
 
 import type { PrismaClient } from '@prisma/client';
 import type {
+  Project,
   Feature,
   Environment,
   FlagState,
@@ -89,6 +90,15 @@ export class FlagRepository implements IFlagRepository {
         environmentId,
         enabled,
         updatedBy,
+      },
+    });
+  }
+
+  async getProjectByApiKey(apiKey: string): Promise<Project | null> {
+    return this.prisma.project.findFirst({
+      where: {
+        apiKey,
+        archivedAt: null,
       },
     });
   }

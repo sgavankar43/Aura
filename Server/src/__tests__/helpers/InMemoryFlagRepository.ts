@@ -10,6 +10,7 @@
  */
 
 import type {
+  Project,
   Feature,
   Environment,
   FlagState,
@@ -17,11 +18,16 @@ import type {
 } from '../../models/flag.models.js';
 
 export class InMemoryFlagRepository implements IFlagRepository {
+  private projects: Project[] = [];
   private features: Feature[] = [];
   private environments: Environment[] = [];
   private flagStates: FlagState[] = [];
 
   // --- Seed methods for test setup ---
+
+  seedProjects(projects: Project[]): void {
+    this.projects = [...projects];
+  }
 
   seedFeatures(features: Feature[]): void {
     this.features = [...features];
@@ -98,5 +104,13 @@ export class InMemoryFlagRepository implements IFlagRepository {
     };
     this.flagStates.push(newState);
     return { ...newState };
+  }
+
+  async getProjectByApiKey(apiKey: string): Promise<Project | null> {
+    return (
+      this.projects.find(
+        (p) => p.apiKey === apiKey && p.archivedAt === null,
+      ) ?? null
+    );
   }
 }
