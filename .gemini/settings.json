@@ -1,0 +1,33 @@
+{
+  "agents": {
+    "planner": {
+      "description": "Feature planning and implementation strategy",
+      "activateOn": ["feature", "refactor", "plan", "implement"]
+    },
+    "architect": {
+      "description": "System design and architectural decisions",
+      "activateOn": ["architecture", "design", "scale", "pattern"]
+    },
+    "security-auditor": {
+      "description": "Security review and OWASP compliance",
+      "activateOn": ["security", "auth", "vulnerability", "dependency"]
+    },
+    "tdd-enforcer": {
+      "description": "TDD discipline and test quality",
+      "activateOn": ["test", "coverage", "tdd"]
+    }
+  },
+  "workflows": {
+    "feature-development": {
+      "description": "Standard feature development workflow",
+      "steps": [
+        "planner — Create implementation plan",
+        "architect — Review architectural impact",
+        "tdd-enforcer — Write tests first",
+        "Implementation — Write code to pass tests",
+        "security-auditor — Review for vulnerabilities",
+        "CI Pipeline — Automated validation"
+      ]
+    }
+  }
+}

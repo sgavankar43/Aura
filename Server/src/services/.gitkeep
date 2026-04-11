@@ -1,0 +1,3 @@
+// Architecture: Service layer placeholder
+// Services contain business logic and are called by controllers.
+// Services call repositories for data access — never the reverse.

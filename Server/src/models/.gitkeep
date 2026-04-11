@@ -1,0 +1,3 @@
+// Architecture: Model layer placeholder
+// Models define data structures, types, and schemas (Zod schemas, interfaces).
+// Models can be imported by any layer.

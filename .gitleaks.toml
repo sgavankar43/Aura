@@ -1,0 +1,50 @@
+# =============================================================================
+# Gitleaks Configuration for Aura
+# Secrets detection in source code and git history
+# =============================================================================
+
+title = "Aura Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlisted files and patterns"
+
+# Test fixtures may contain dummy secrets
+paths = [
+  '''__tests__''',
+  '''\.test\.ts$''',
+  '''\.test\.tsx$''',
+  '''\.example$''',
+  '''\.env\.example$''',
+  '''\.md$''',
+]
+
+# Dummy values used in tests
+regexes = [
+  '''test-secret''',
+  '''dummy-key''',
+  '''example\.com''',
+]
+
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key"
+regex = '''(?i)(api[_-]?key|apikey)\s*[:=]\s*['"][a-zA-Z0-9_\-]{20,}['"]'''
+entropy = 3.5
+secretGroup = 0
+[rules.allowlist]
+paths = ['''\.example$''', '''__tests__''']
+
+[[rules]]
+id = "jwt-token"
+description = "JWT Token"
+regex = '''eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}'''
+[rules.allowlist]
+paths = ['''__tests__''']
+
+[[rules]]
+id = "private-key"
+description = "Private Key"
+regex = '''-----BEGIN (RSA |EC |DSA )?PRIVATE KEY-----'''

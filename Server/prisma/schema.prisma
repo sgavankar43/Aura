@@ -1,0 +1,113 @@
+// =============================================================================
+// Aura Flag Engine — Prisma Schema
+//
+// Architect Decision: Use Prisma ORM with PostgreSQL for the Flag Engine.
+// This schema supports: Projects, Environments, Features (flags),
+// and Environment-specific Flag States.
+//
+// Data model follows a multi-tenant feature flag system:
+//   Project → has many Environments
+//   Project → has many Features
+//   Feature + Environment → FlagState (the actual ON/OFF value)
+//
+// Key design decisions:
+//   1. FlagState is a join between Feature and Environment, not embedded
+//      in either — this allows per-environment overrides cleanly.
+//   2. Features have a `defaultEnabled` fallback used when no
+//      environment-specific FlagState exists.
+//   3. Soft deletes via `archivedAt` — flags are never hard-deleted
+//      to preserve audit history.
+//   4. Unique constraints enforce data integrity at the DB level.
+//
+// See: docs/adr/003-flag-engine-data-model.md
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// A project is the top-level tenant. Each project has its own
+/// set of environments and feature flags.
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  apiKey      String   @unique @default(uuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  archivedAt  DateTime? @map("archived_at")
+
+  environments Environment[]
+  features     Feature[]
+
+  @@map("projects")
+}
+
+/// An environment within a project (e.g., development, staging, production).
+/// Each environment can have different flag states for the same feature.
+model Environment {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String
+  color     String?  @default("#6B7280")
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  projectId String  @map("project_id")
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  flagStates FlagState[]
+
+  /// A project cannot have two environments with the same slug
+  @@unique([projectId, slug])
+  @@map("environments")
+}
+
+/// A feature flag definition. The flag itself lives at the project level;
+/// its ON/OFF state is determined per-environment via FlagState.
+model Feature {
+  id             String   @id @default(uuid())
+  key            String
+  name           String
+  description    String?
+  defaultEnabled Boolean  @default(false) @map("default_enabled")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  archivedAt     DateTime? @map("archived_at")
+
+  projectId String  @map("project_id")
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  flagStates FlagState[]
+
+  /// A project cannot have two features with the same key
+  @@unique([projectId, key])
+  @@map("features")
+}
+
+/// The per-environment state of a feature flag.
+/// This is the "truth" — when evaluating a flag, we look here first.
+/// If no FlagState exists for a Feature+Environment pair, we fall back
+/// to Feature.defaultEnabled.
+model FlagState {
+  id        String   @id @default(uuid())
+  enabled   Boolean  @default(false)
+  updatedAt DateTime @updatedAt @map("updated_at")
+  updatedBy String?  @map("updated_by")
+
+  featureId     String      @map("feature_id")
+  feature       Feature     @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  environmentId String      @map("environment_id")
+  environment   Environment @relation(fields: [environmentId], references: [id], onDelete: Cascade)
+
+  /// Each feature can only have one state per environment
+  @@unique([featureId, environmentId])
+  @@map("flag_states")
+}

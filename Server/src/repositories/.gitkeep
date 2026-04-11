@@ -1,0 +1,3 @@
+// Architecture: Repository layer placeholder
+// Repositories abstract data access (DB, external APIs, etc.)
+// Only services should import from repositories — never routes or controllers.
