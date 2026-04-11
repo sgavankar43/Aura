@@ -1,0 +1,42 @@
+{
+  "name": "@aura/sdk",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Aura feature flag client SDK — zero-latency flag evaluation with real-time sync",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "keywords": [
+    "feature-flags",
+    "aura",
+    "sdk",
+    "real-time",
+    "websocket"
+  ],
+  "license": "MIT"
+}

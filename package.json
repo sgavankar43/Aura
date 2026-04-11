@@ -5,7 +5,8 @@
   "description": "Aura — AI-Agent driven distributed systems platform",
   "workspaces": [
     "Client",
-    "Server"
+    "Server",
+    "SDK"
   ],
   "scripts": {
     "dev:server": "npm run dev --workspace=Server",
