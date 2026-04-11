@@ -34,12 +34,12 @@ datasource db {
 /// A project is the top-level tenant. Each project has its own
 /// set of environments and feature flags.
 model Project {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   description String?
-  apiKey      String   @unique @default(uuid())
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  apiKey      String    @unique @default(uuid())
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
   archivedAt  DateTime? @map("archived_at")
 
   environments Environment[]
@@ -72,13 +72,13 @@ model Environment {
 /// A feature flag definition. The flag itself lives at the project level;
 /// its ON/OFF state is determined per-environment via FlagState.
 model Feature {
-  id             String   @id @default(uuid())
+  id             String    @id @default(uuid())
   key            String
   name           String
   description    String?
-  defaultEnabled Boolean  @default(false) @map("default_enabled")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  defaultEnabled Boolean   @default(false) @map("default_enabled")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
   archivedAt     DateTime? @map("archived_at")
 
   projectId String  @map("project_id")
@@ -101,8 +101,8 @@ model FlagState {
   updatedAt DateTime @updatedAt @map("updated_at")
   updatedBy String?  @map("updated_by")
 
-  featureId     String      @map("feature_id")
-  feature       Feature     @relation(fields: [featureId], references: [id], onDelete: Cascade)
+  featureId String  @map("feature_id")
+  feature   Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
 
   environmentId String      @map("environment_id")
   environment   Environment @relation(fields: [environmentId], references: [id], onDelete: Cascade)
@@ -110,4 +110,48 @@ model FlagState {
   /// Each feature can only have one state per environment
   @@unique([featureId, environmentId])
   @@map("flag_states")
+}
+
+// --- Dashboard & Control Plane ---
+
+/// Dashboard user (admin)
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  name         String
+  role         String   @default("admin") // admin | viewer
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+/// Long-lived sessions
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("refresh_tokens")
+}
+
+/// History of changes for accountability
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String // "flag.toggled", "feature.created", etc.
+  entity    String // "FlagState", "Feature", "Project"
+  entityId  String   @map("entity_id")
+  userId    String   @map("user_id")
+  projectId String   @map("project_id")
+  metadata  Json? // { featureKey, envSlug, oldValue, newValue }
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([projectId, createdAt(sort: Desc)])
+  @@map("audit_logs")
 }

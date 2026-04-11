@@ -4,8 +4,8 @@
  * TDD: Tests for centralized error handling and 404 responses.
  */
 
-import { describe, it, expect } from 'vitest';
 import request from 'supertest';
+import { describe, it, expect } from 'vitest';
 import { createApp } from '../../app.js';
 
 const app = createApp();
@@ -29,9 +29,7 @@ describe('Error Handler', () => {
     });
 
     it('should include request ID in 404 response', async () => {
-      const res = await request(app)
-        .get('/missing')
-        .set('x-request-id', 'test-404-id');
+      const res = await request(app).get('/missing').set('x-request-id', 'test-404-id');
 
       expect(res.status).toBe(404);
     });

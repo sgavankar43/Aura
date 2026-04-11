@@ -14,16 +14,13 @@
  * InMemoryFlagRepository for auth lookups, and a mock Redis subscriber.
  */
 
-import { describe, it, expect, beforeAll, afterAll, beforeEach, vi } from 'vitest';
 import { createServer, Server as HttpServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import { io as ioClient, Socket as ClientSocket } from 'socket.io-client';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
+import { WebSocketGateway, type RedisSubscriber } from '../../gateways/websocket.gateway.js';
 import type { Project, FlagUpdateEvent } from '../../models/flag.models.js';
 import { InMemoryFlagRepository } from '../helpers/InMemoryFlagRepository.js';
-import {
-  WebSocketGateway,
-  type RedisSubscriber,
-} from '../../gateways/websocket.gateway.js';
 
 // =============================================================================
 // Test Fixtures
@@ -64,7 +61,9 @@ function createMockRedisSubscriber(): RedisSubscriber {
     // Test helper: simulate a Redis message arriving
     __simulateMessage(channel: string, message: string) {
       const handler = handlers.get('message');
-      if (handler) handler(channel, message);
+      if (handler) {
+        handler(channel, message);
+      }
     },
   } as any;
 }
@@ -307,11 +306,14 @@ describe('WebSocket Gateway', () => {
       clientA.on('flag_updated', spy);
 
       // Message on a different channel
-      mockRedis.__simulateMessage('some:other:channel', JSON.stringify({
-        projectId: PROJECT_A.id,
-        featureKey: 'test',
-        enabled: true,
-      }));
+      mockRedis.__simulateMessage(
+        'some:other:channel',
+        JSON.stringify({
+          projectId: PROJECT_A.id,
+          featureKey: 'test',
+          enabled: true,
+        }),
+      );
 
       await new Promise((r) => setTimeout(r, 200));
       expect(spy).not.toHaveBeenCalled();

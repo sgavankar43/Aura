@@ -5,8 +5,8 @@
  * Every new feature should start with a failing test here.
  */
 
-import { describe, it, expect } from 'vitest';
 import request from 'supertest';
+import { describe, it, expect } from 'vitest';
 import { createApp } from '../app.js';
 
 const app = createApp();
@@ -70,9 +70,7 @@ describe('Security Headers', () => {
   });
 
   it('should echo back provided request ID', async () => {
-    const res = await request(app)
-      .get('/health')
-      .set('x-request-id', 'test-request-123');
+    const res = await request(app).get('/health').set('x-request-id', 'test-request-123');
 
     expect(res.status).toBe(200);
   });

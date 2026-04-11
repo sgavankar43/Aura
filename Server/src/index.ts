@@ -10,12 +10,13 @@
  */
 
 import { createServer } from 'http';
-import { Server as SocketIOServer } from 'socket.io';
+import { PrismaClient } from '@prisma/client';
 import Redis from 'ioredis';
+import { Server as SocketIOServer } from 'socket.io';
 import { createApp } from './app.js';
 import { config } from './config/index.js';
-import { logger } from './utils/logger.js';
 import { WebSocketGateway } from './gateways/websocket.gateway.js';
+import { logger } from './utils/logger.js';
 
 const app = createApp();
 
@@ -37,6 +38,11 @@ const redisSubscriber = new Redis(redisUrl, {
   lazyConnect: false,
 });
 
+redisSubscriber.on('connect', () => logger.info('✅ Redis Subscriber connected'));
+redisSubscriber.on('error', (err) =>
+  logger.error('❌ Redis Subscriber connection failed:', err.message),
+);
+
 // Placeholder repository — will be replaced with Prisma-backed repo once DB is initialized
 // For now, use a no-op that rejects all connections (safe default)
 const noopRepository = {
@@ -45,24 +51,39 @@ const noopRepository = {
   getEnvironment: async () => null,
   getFeaturesByProject: async () => [],
   getFlagStatesByEnvironment: async () => [],
-  upsertFlagState: async () => { throw new Error('Not implemented'); },
+  upsertFlagState: async () => {
+    throw new Error('Not implemented');
+  },
   getProjectByApiKey: async () => null,
 };
 
-const gateway = new WebSocketGateway(io, redisSubscriber, noopRepository);
+const gateway = new WebSocketGateway(io, redisSubscriber as any, noopRepository);
 gateway.initialize();
 
 logger.info('🔌 WebSocket gateway initialized', { redisUrl });
 
-// --- Start Server ---
-httpServer.listen(config.port, config.host, () => {
-  logger.info(`🚀 Aura server running`, {
-    port: config.port,
-    host: config.host,
-    env: config.nodeEnv,
-    websocket: true,
+// --- Verify Integrations and Start Server ---
+const prisma = new PrismaClient();
+
+async function start() {
+  try {
+    await prisma.$connect();
+    logger.info('✅ Database connected successfully');
+  } catch (err: any) {
+    logger.error('❌ Database connection failed:', err.message);
+  }
+
+  httpServer.listen(config.port, config.host, () => {
+    logger.info(`🚀 Aura server running`, {
+      port: config.port,
+      host: config.host,
+      env: config.nodeEnv,
+      websocket: true,
+    });
   });
-});
+}
+
+start();
 
 // --- Graceful Shutdown ---
 const shutdown = async (signal: string) => {

@@ -5,8 +5,8 @@
  * They validate OWASP security requirements.
  */
 
-import { describe, it, expect } from 'vitest';
 import request from 'supertest';
+import { describe, it, expect } from 'vitest';
 import { createApp } from '../../app.js';
 
 const app = createApp();
@@ -75,9 +75,7 @@ describe('Security Middleware', () => {
 
     it('should accept a provided request ID', async () => {
       const customId = 'custom-request-id-12345';
-      const res = await request(app)
-        .get('/health')
-        .set('x-request-id', customId);
+      const res = await request(app).get('/health').set('x-request-id', customId);
 
       expect(res.status).toBe(200);
     });

@@ -37,6 +37,13 @@ export class PubSubService implements IPubSubService {
       maxRetriesPerRequest: 3,
       lazyConnect: true,
     });
+
+    // Log connection status and prevent unhandled promise rejections on connection failure
+    client.on('connect', () => console.log('✅ Redis Publisher connected'));
+    client.on('error', (err) =>
+      console.error('❌ Redis Publisher connection failed:', err.message),
+    );
+
     return new PubSubService(client);
   }
 

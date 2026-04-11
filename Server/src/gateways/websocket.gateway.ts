@@ -103,13 +103,17 @@ export class WebSocketGateway {
     this.redisSubscriber.subscribe(FLAG_UPDATE_CHANNEL);
 
     this.redisSubscriber.on('message', (channel: string, message: string) => {
-      if (channel !== FLAG_UPDATE_CHANNEL) return;
+      if (channel !== FLAG_UPDATE_CHANNEL) {
+        return;
+      }
 
       try {
         const event = JSON.parse(message) as FlagUpdateEvent;
 
         // Validate the parsed event has the required fields
-        if (!event.projectId || !event.featureKey) return;
+        if (!event.projectId || !event.featureKey) {
+          return;
+        }
 
         // Emit only to the project room — other projects never see this
         const roomName = `project:${event.projectId}`;

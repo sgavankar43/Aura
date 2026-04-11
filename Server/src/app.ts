@@ -18,6 +18,7 @@
  */
 
 import express from 'express';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import {
   helmetMiddleware,
   corsMiddleware,
@@ -26,8 +27,9 @@ import {
   requestLoggerMiddleware,
 } from './middleware/security.js';
 import { securityAuditMiddleware } from './middleware/securityAudit.js';
-import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
+import authRoutes from './routes/auth.routes.js';
 import healthRoutes from './routes/health.routes.js';
+import projectsRoutes from './routes/projects.routes.js';
 
 export function createApp(): express.Application {
   const app = express();
@@ -48,6 +50,8 @@ export function createApp(): express.Application {
 
   // --- Routes ---
   app.use(healthRoutes);
+  app.use('/api/auth', authRoutes);
+  app.use('/api/projects', projectsRoutes);
 
   // --- Error Handling (must be last) ---
   app.use(notFoundHandler);

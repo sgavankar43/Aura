@@ -5,10 +5,11 @@
  * Security: Validates all config at startup; fails fast on missing values.
  */
 
-import { z } from 'zod';
+import path from 'path';
 import dotenv from 'dotenv';
+import { z } from 'zod';
 
-dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
 
 const configSchema = z.object({
   nodeEnv: z.enum(['development', 'production', 'test']).default('development'),

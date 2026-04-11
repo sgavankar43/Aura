@@ -9,11 +9,11 @@
  * - OWASP Secure Headers Project
  */
 
-import helmet from 'helmet';
 import cors from 'cors';
-import rateLimit from 'express-rate-limit';
-import { v4 as uuidv4 } from 'uuid';
 import type { Request, Response, NextFunction, RequestHandler } from 'express';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import { v4 as uuidv4 } from 'uuid';
 import { config } from '../config/index.js';
 import { logger } from '../utils/logger.js';
 

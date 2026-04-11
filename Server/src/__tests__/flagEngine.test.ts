@@ -17,12 +17,7 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import type {
-  Feature,
-  Environment,
-  FlagState,
-  IFlagRepository,
-} from '../models/flag.models.js';
+import type { Feature, Environment, FlagState } from '../models/flag.models.js';
 import { FlagService } from '../services/flag.service.js';
 import { InMemoryFlagRepository } from './helpers/InMemoryFlagRepository.js';
 

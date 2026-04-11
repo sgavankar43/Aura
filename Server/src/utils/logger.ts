@@ -39,9 +39,13 @@ const REDACTED = '[REDACTED]';
  * Creates a deep copy — never mutates the original.
  */
 function redactSensitive(obj: unknown): unknown {
-  if (obj === null || obj === undefined) return obj;
+  if (obj === null || obj === undefined) {
+    return obj;
+  }
 
-  if (typeof obj === 'string') return obj;
+  if (typeof obj === 'string') {
+    return obj;
+  }
 
   if (Array.isArray(obj)) {
     return obj.map(redactSensitive);

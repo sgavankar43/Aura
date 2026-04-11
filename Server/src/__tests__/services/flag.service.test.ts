@@ -18,7 +18,6 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type {
   Feature,
   Environment,
-  FlagState,
   IPubSubService,
   FlagUpdateEvent,
 } from '../../models/flag.models.js';
@@ -104,7 +103,11 @@ describe('FlagService — updateFlagState + PubSub', () => {
   describe('persisting flag state', () => {
     it('should create a new FlagState when none exists', async () => {
       const result = await flagService.updateFlagState(
-        PROJECT_ID, 'dev', 'dark-mode', true, 'user-123',
+        PROJECT_ID,
+        'dev',
+        'dark-mode',
+        true,
+        'user-123',
       );
 
       expect(result).not.toBeNull();
@@ -118,7 +121,11 @@ describe('FlagService — updateFlagState + PubSub', () => {
       await flagService.updateFlagState(PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
       // Then update
       const result = await flagService.updateFlagState(
-        PROJECT_ID, 'dev', 'dark-mode', false, 'user-456',
+        PROJECT_ID,
+        'dev',
+        'dark-mode',
+        false,
+        'user-456',
       );
 
       expect(result).not.toBeNull();
@@ -171,7 +178,11 @@ describe('FlagService — updateFlagState + PubSub', () => {
       mockPubSub.publishFlagUpdate.mockResolvedValue(5);
 
       const result = await flagService.updateFlagState(
-        PROJECT_ID, 'dev', 'dark-mode', true, 'user-123',
+        PROJECT_ID,
+        'dev',
+        'dark-mode',
+        true,
+        'user-123',
       );
 
       expect(result!.published).toBe(true);
@@ -182,7 +193,11 @@ describe('FlagService — updateFlagState + PubSub', () => {
       mockPubSub.publishFlagUpdate.mockRejectedValue(new Error('Redis down'));
 
       const result = await flagService.updateFlagState(
-        PROJECT_ID, 'dev', 'dark-mode', true, 'user-123',
+        PROJECT_ID,
+        'dev',
+        'dark-mode',
+        true,
+        'user-123',
       );
 
       // The mutation itself should succeed
@@ -195,7 +210,11 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
     it('should not call PubSub when feature is not found', async () => {
       const result = await flagService.updateFlagState(
-        PROJECT_ID, 'dev', 'nonexistent', true, 'user-123',
+        PROJECT_ID,
+        'dev',
+        'nonexistent',
+        true,
+        'user-123',
       );
 
       expect(result).toBeNull();
@@ -204,7 +223,11 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
     it('should not call PubSub when environment is not found', async () => {
       const result = await flagService.updateFlagState(
-        PROJECT_ID, 'staging', 'dark-mode', true, 'user-123',
+        PROJECT_ID,
+        'staging',
+        'dark-mode',
+        true,
+        'user-123',
       );
 
       expect(result).toBeNull();
@@ -221,7 +244,11 @@ describe('FlagService — updateFlagState + PubSub', () => {
       const serviceWithoutPubSub = new FlagService(repository);
 
       const result = await serviceWithoutPubSub.updateFlagState(
-        PROJECT_ID, 'dev', 'dark-mode', true, 'user-123',
+        PROJECT_ID,
+        'dev',
+        'dark-mode',
+        true,
+        'user-123',
       );
 
       expect(result).not.toBeNull();
@@ -242,7 +269,13 @@ describe('FlagService — updateFlagState + PubSub', () => {
     });
 
     it('should return null for empty environment slug', async () => {
-      const result = await flagService.updateFlagState(PROJECT_ID, '', 'dark-mode', true, 'user-123');
+      const result = await flagService.updateFlagState(
+        PROJECT_ID,
+        '',
+        'dark-mode',
+        true,
+        'user-123',
+      );
       expect(result).toBeNull();
     });
 

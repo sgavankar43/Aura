@@ -15,8 +15,8 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { PubSubService, FLAG_UPDATE_CHANNEL } from '../../services/pubsub.service.js';
 import type { FlagUpdateEvent } from '../../models/flag.models.js';
+import { PubSubService, FLAG_UPDATE_CHANNEL } from '../../services/pubsub.service.js';
 
 // =============================================================================
 // ioredis Mock
@@ -77,10 +77,7 @@ describe('PubSubService', () => {
       await pubsub.publishFlagUpdate(sampleEvent);
 
       expect(mockRedis.publish).toHaveBeenCalledTimes(1);
-      expect(mockRedis.publish).toHaveBeenCalledWith(
-        'aura:flags:updates',
-        expect.any(String),
-      );
+      expect(mockRedis.publish).toHaveBeenCalledWith('aura:flags:updates', expect.any(String));
     });
 
     it('should publish a JSON-stringified FlagUpdateEvent payload', async () => {
@@ -118,9 +115,7 @@ describe('PubSubService', () => {
     it('should propagate errors when Redis publish fails', async () => {
       mockRedis.publish.mockRejectedValue(new Error('Redis connection lost'));
 
-      await expect(pubsub.publishFlagUpdate(sampleEvent)).rejects.toThrow(
-        'Redis connection lost',
-      );
+      await expect(pubsub.publishFlagUpdate(sampleEvent)).rejects.toThrow('Redis connection lost');
     });
 
     it('should handle events with enabled=false', async () => {

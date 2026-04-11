@@ -4,9 +4,9 @@
  * TDD: Tests for Zod-based request validation at the boundary.
  */
 
-import { describe, it, expect } from 'vitest';
 import express from 'express';
 import request from 'supertest';
+import { describe, it, expect } from 'vitest';
 import { z } from 'zod';
 import { validate } from '../../middleware/validation.js';
 
@@ -71,9 +71,7 @@ describe('Validation Middleware', () => {
     });
 
     it('should reject missing required fields', async () => {
-      const res = await request(app)
-        .post('/test/body')
-        .send({ name: 'John' }); // missing email
+      const res = await request(app).post('/test/body').send({ name: 'John' }); // missing email
 
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Validation Error');
@@ -124,9 +122,7 @@ describe('Validation Middleware', () => {
 
   describe('Params Validation', () => {
     it('should accept valid UUID params', async () => {
-      const res = await request(app).get(
-        '/test/params/550e8400-e29b-41d4-a716-446655440000',
-      );
+      const res = await request(app).get('/test/params/550e8400-e29b-41d4-a716-446655440000');
 
       expect(res.status).toBe(200);
     });
