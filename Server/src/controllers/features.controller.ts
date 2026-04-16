@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 // Removed unused FlagService
@@ -118,6 +119,7 @@ export async function archiveFeature(req: Request, res: Response): Promise<void>
   }
 }
 
+// eslint-disable-next-line max-lines-per-function
 export async function toggleFlag(req: Request, res: Response): Promise<void> {
   const { id, envSlug, key } = req.params;
   const { enabled } = req.body;

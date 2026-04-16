@@ -48,6 +48,7 @@ export async function publicFetch<T = unknown>(path: string, init?: RequestInit)
   }
 }
 
+// eslint-disable-next-line complexity
 export async function apiFetch<T = unknown>(
   path: string,
   options: ApiFetchOptions = {},

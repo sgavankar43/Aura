@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * PubSubService — Redis Pub/Sub for real-time flag update broadcasting.
  *

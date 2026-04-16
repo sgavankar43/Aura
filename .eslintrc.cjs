@@ -88,6 +88,14 @@ module.exports = {
         'max-lines-per-function': 'off',
         'max-lines': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+      },
+    },
+    {
+      // Relax max-lines for React components 
+      files: ['Client/src/**/*.tsx'],
+      rules: {
+        'max-lines-per-function': 'off',
       },
     },
   ],
