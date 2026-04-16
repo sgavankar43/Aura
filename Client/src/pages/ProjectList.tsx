@@ -1,103 +1,167 @@
-import { Plus, Layout } from 'lucide-react';
+import { Layout, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useProjects, useCreateProject } from '../hooks/queries';
+import { PageLoader } from '@/components/feedback/PageLoader';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent } from '@/components/ui/Card';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { Modal } from '@/components/ui/Modal';
+import { useCreateProject, useProjects } from '@/hooks/queries';
+import type { Project } from '@/types/domain';
 
 export default function ProjectList() {
   const { data: projects, isLoading } = useProjects();
   const createProject = useCreateProject();
-  const [showNew, setShowNew] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [error, setError] = useState('');
+
+  const reset = () => {
+    setName('');
+    setDescription('');
+    setError('');
+  };
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name) {
+    if (!name.trim()) {
       return;
     }
-
-    await createProject.mutateAsync({ name });
-    setName('');
-    setShowNew(false);
+    setError('');
+    try {
+      await createProject.mutateAsync({
+        name: name.trim(),
+        description: description.trim() || undefined,
+      });
+      reset();
+      setModalOpen(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not create project');
+    }
   };
 
   if (isLoading) {
-    return <div className="p-8 text-muted-foreground animate-pulse">Loading projects...</div>;
+    return <PageLoader />;
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
-        <button
-          onClick={() => setShowNew(true)}
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          New Project
-        </button>
+    <div className="space-y-8" data-testid="project-list">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Projects</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Organize feature flags by product or service. Each project has its own API key and audit
+            trail.
+          </p>
+        </div>
+        <Button type="button" onClick={() => setModalOpen(true)} data-testid="new-project">
+          <Plus className="h-4 w-4" />
+          New project
+        </Button>
       </div>
 
-      {showNew && (
-        <div className="bg-card border rounded-lg p-6 max-w-md">
-          <h3 className="text-lg font-medium mb-4">Create New Project</h3>
-          <form onSubmit={handleCreate} className="space-y-4">
-            <div>
-              <label className="text-sm font-medium mb-1 block">Project Name</label>
-              <input
-                autoFocus
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                placeholder="e.g. Frontend App"
-              />
+      <Modal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          reset();
+        }}
+        title="New project"
+        description="Projects isolate environments, flags, and audit logs for a single surface area."
+        data-testid="project-modal"
+      >
+        <form onSubmit={(e) => void handleCreate(e)} className="space-y-4">
+          {error ? (
+            <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {error}
             </div>
-            <div className="flex gap-2 justify-end">
-              <button
-                type="button"
-                onClick={() => setShowNew(false)}
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground h-10 py-2 px-4 border"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={createProject.isPending}
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50 ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
-              >
-                {createProject.isPending ? 'Creating...' : 'Create'}
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects?.length === 0 && !showNew && (
-          <div className="col-span-full py-12 text-center rounded-xl border border-dashed border-muted text-muted-foreground">
-            <Layout className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <h3 className="text-lg font-medium text-foreground">No projects</h3>
-            <p className="mt-1">Get started by creating a new project.</p>
+          ) : null}
+          <div className="space-y-2">
+            <Label htmlFor="proj-name">Name</Label>
+            <Input
+              id="proj-name"
+              autoFocus
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Payments API"
+              data-testid="project-name-input"
+            />
           </div>
-        )}
+          <div className="space-y-2">
+            <Label htmlFor="proj-desc">Description (optional)</Label>
+            <textarea
+              id="proj-desc"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={2}
+              className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              placeholder="Owns checkout and billing flags"
+            />
+          </div>
+          <div className="flex justify-end gap-2 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setModalOpen(false);
+                reset();
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={createProject.isPending}
+              data-testid="project-create-submit"
+            >
+              {createProject.isPending ? 'Creating…' : 'Create'}
+            </Button>
+          </div>
+        </form>
+      </Modal>
 
-        {projects?.map((project: any) => (
-          <Link key={project.id} to={`/projects/${project.id}`} className="group block">
-            <div className="h-full rounded-xl border bg-card text-card-foreground shadow-sm hover:border-primary/50 transition-colors p-6">
-              <h3 className="font-semibold leading-none tracking-tight group-hover:text-primary transition-colors">
-                {project.name}
-              </h3>
-              <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-                {project.description || 'No description provided.'}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {projects?.length === 0 ? (
+          <Card className="border-dashed md:col-span-2 xl:col-span-3">
+            <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+              <Layout className="mb-4 h-12 w-12 text-muted-foreground opacity-50" />
+              <h3 className="text-lg font-semibold">No projects yet</h3>
+              <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+                Create a project to receive an API key and start defining flags per environment.
               </p>
+              <Button type="button" className="mt-6" onClick={() => setModalOpen(true)}>
+                Create project
+              </Button>
+            </CardContent>
+          </Card>
+        ) : null}
 
-              <div className="mt-6 flex items-center justify-between text-xs text-muted-foreground">
-                <span className="font-mono bg-muted px-2 py-1 rounded-md">
-                  ID: {project.id.slice(0, 8)}...
-                </span>
-                <span>Created {new Date(project.createdAt).toLocaleDateString()}</span>
-              </div>
-            </div>
+        {(projects ?? []).map((project: Project) => (
+          <Link
+            key={project.id}
+            to={`/projects/${project.id}`}
+            className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            data-testid={`project-card-${project.id}`}
+          >
+            <Card className="h-full transition-colors group-hover:border-primary/40 group-hover:shadow-md">
+              <CardContent className="p-6">
+                <h3 className="font-semibold tracking-tight group-hover:text-primary">
+                  {project.name}
+                </h3>
+                <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
+                  {project.description?.trim() ? project.description : 'No description'}
+                </p>
+                <div className="mt-6 flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="rounded-md bg-muted px-2 py-1 font-mono">
+                    {project.id.slice(0, 8)}…
+                  </span>
+                  <span>{new Date(project.createdAt).toLocaleDateString()}</span>
+                </div>
+              </CardContent>
+            </Card>
           </Link>
         ))}
       </div>

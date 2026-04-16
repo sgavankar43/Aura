@@ -1,7 +1,14 @@
 import { UserPlus } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthShell } from '@/components/auth/AuthShell';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent } from '@/components/ui/Card';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { useAuth } from '@/contexts/AuthContext';
+import { ApiError, apiFetch } from '@/lib/api';
+import type { User } from '@/types/domain';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -18,119 +25,117 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const data = await apiFetch<{ token?: string; user?: User; message?: string }>(
+        '/auth/register',
+        {
+          method: 'POST',
+          body: JSON.stringify({ name, email, password }),
+          skipAuth: true,
+        },
+      );
 
-      const contentType = res.headers.get('content-type');
-      let data: any = {};
-
-      if (contentType && contentType.includes('application/json')) {
-        data = await res.json();
-      } else {
-        const text = await res.text();
-        if (!res.ok) {
-          throw new Error(text || 'Backend server is unreachable');
-        }
-      }
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Registration failed');
-      }
-
-      // Auto-login after successful registration implies the API returns a token,
-      // but our register endpoint just returns `{ user }`. To login, we ping login.
-      // Wait, let's check if we return token on register.
-      // If not, we just redirect back to login. Let's navigate to login.
-      if (data.token) {
+      if (data.token && data.user) {
         login(data.token, data.user);
         navigate('/projects');
-      } else {
-        navigate('/login', { state: { message: 'Registration successful! Please sign in.' } });
+        return;
       }
-    } catch (err: any) {
-      setError(err.message);
+
+      navigate('/login', {
+        state: { message: data.message ?? 'Registration successful. Please sign in.' },
+      });
+    } catch (err) {
+      const message =
+        err instanceof ApiError
+          ? err.message
+          : err instanceof Error
+            ? err.message
+            : 'Registration failed';
+      setError(message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col items-center mb-8 text-center">
-          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 text-primary">
-            <UserPlus className="w-6 h-6" />
+    <AuthShell
+      title="Create your workspace"
+      subtitle="Register to run a distributed feature-flag control plane with audit history."
+    >
+      <Card variant="terminal" className="shadow-neon-sm" data-testid="register-card">
+        <CardContent className="p-8 pt-4">
+          <div className="mb-6 flex justify-center">
+            <div className="flex h-12 w-12 items-center justify-center border border-accent bg-accent/10 text-accent cyber-chamfer-sm">
+              <UserPlus className="h-6 w-6" aria-hidden />
+            </div>
           </div>
-          <h1 className="text-2xl font-bold">Create an Account</h1>
-          <p className="text-muted-foreground mt-2 text-sm">
-            Sign up to start managing your feature flags
-          </p>
-        </div>
 
-        <div className="bg-card border border-border/50 rounded-xl shadow-lg p-6 backdrop-blur-xl">
-          {error && (
-            <div className="mb-4 p-3 bg-destructive/15 text-destructive rounded-lg text-sm border border-destructive/20">
+          {error ? (
+            <div className="mb-4 cyber-chamfer-sm border border-destructive bg-destructive/10 px-4 py-3 font-mono text-sm uppercase text-destructive">
               {error}
             </div>
-          )}
+          ) : null}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium leading-none">Name</label>
-              <input
-                type="text"
+          <form onSubmit={(e) => void handleSubmit(e)} className="space-y-6">
+            <div className="space-y-3">
+              <Label htmlFor="reg-name">Name</Label>
+              <Input
+                id="reg-name"
                 required
+                autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 placeholder="Jane Doe"
+                data-testid="register-name"
               />
             </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium leading-none">Email</label>
-              <input
+            <div className="space-y-3">
+              <Label htmlFor="reg-email">Email</Label>
+              <Input
+                id="reg-email"
                 type="email"
                 required
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 placeholder="jane@example.com"
+                data-testid="register-email"
               />
             </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium leading-none">Password</label>
-              <input
+            <div className="space-y-3">
+              <Label htmlFor="reg-password">Password</Label>
+              <Input
+                id="reg-password"
                 type="password"
                 required
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 placeholder="••••••••"
+                data-testid="register-password"
               />
             </div>
-
-            <button
+            <Button
               type="submit"
+              variant="glitch"
+              className="w-full mt-4"
               disabled={loading}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-full mt-2"
+              data-testid="register-submit"
             >
-              {loading ? 'Creating account...' : 'Create Account'}
-            </button>
+              {loading ? 'INITIALIZING...' : 'INITIALIZE PROTOCOL'}
+            </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            Already have an account?{' '}
-            <Link to="/login" className="text-primary hover:underline font-medium">
-              Sign in
+          <p className="mt-8 text-center text-sm font-mono text-muted-foreground uppercase">
+            Already active?{' '}
+            <Link
+              to="/login"
+              className="font-bold text-accent hover:underline hover:text-accentSecondary transition-colors"
+            >
+              Access Terminal
             </Link>
-          </div>
-        </div>
-      </div>
-    </div>
+          </p>
+        </CardContent>
+      </Card>
+    </AuthShell>
   );
 }

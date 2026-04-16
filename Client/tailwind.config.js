@@ -16,44 +16,62 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["JetBrains Mono", "Fira Code", "Consolas", "monospace"],
+        mono: ["JetBrains Mono", "Fira Code", "Consolas", "monospace"],
+        heading: ["Orbitron", "Share Tech Mono", "monospace"],
+      },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
         },
         success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+          secondary: "var(--accentSecondary)",
+          tertiary: "var(--accentTertiary)"
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
         },
+      },
+      boxShadow: {
+        neon: "var(--box-shadow-neon)",
+        "neon-sm": "var(--box-shadow-neon-sm)",
+        "neon-lg": "var(--box-shadow-neon-lg)",
+        "neon-secondary": "var(--box-shadow-neon-secondary)",
+        "neon-tertiary": "var(--box-shadow-neon-tertiary)",
+      },
+      dropShadow: {
+        glitch: "0 0 10px rgba(0, 255, 136, 0.5)",
+        glow: "0 0 20px rgba(0, 255, 136, 0.3)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -69,10 +87,32 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        blink: {
+          "50%": { opacity: "0" },
+        },
+        glitch: {
+          "0%, 100%": { transform: "translate(0)" },
+          "20%": { transform: "translate(-2px, 2px)" },
+          "40%": { transform: "translate(2px, -2px)" },
+          "60%": { transform: "translate(-1px, -1px)" },
+          "80%": { transform: "translate(1px, 1px)" },
+        },
+        "rgb-shift": {
+          "0%, 100%": { textShadow: "-2px 0 #ff00ff, 2px 0 #00d4ff" },
+          "50%": { textShadow: "2px 0 #ff00ff, -2px 0 #00d4ff" },
+        },
+        scanline: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100vh)" },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "blink": "blink 1s step-end infinite",
+        "glitch": "glitch 2s linear infinite",
+        "rgb-shift": "rgb-shift 3s infinite",
+        "scanline": "scanline 10s linear infinite",
       },
     },
   },

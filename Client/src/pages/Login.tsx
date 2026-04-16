@@ -1,7 +1,14 @@
 import { Shield } from 'lucide-react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { AuthShell } from '@/components/auth/AuthShell';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent } from '@/components/ui/Card';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { useAuth } from '@/contexts/AuthContext';
+import { ApiError, apiFetch } from '@/lib/api';
+import type { User } from '@/types/domain';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -10,6 +17,16 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [flash, setFlash] = useState<string | null>(null);
+
+  useEffect(() => {
+    const msg = (location.state as { message?: string } | null)?.message;
+    if (msg) {
+      setFlash(msg);
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,94 +34,100 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const data = await apiFetch<{ token: string; user: User }>('/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        skipAuth: true,
       });
-
-      const contentType = res.headers.get('content-type');
-      let data: any = {};
-
-      if (contentType && contentType.includes('application/json')) {
-        data = await res.json();
-      } else {
-        const text = await res.text();
-        if (!res.ok) {
-          throw new Error(text || 'Backend server is unreachable');
-        }
-      }
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to login');
-      }
-
       login(data.token, data.user);
       navigate('/projects');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const message =
+        err instanceof ApiError
+          ? err.message
+          : err instanceof Error
+            ? err.message
+            : 'Sign in failed';
+      setError(message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col items-center mb-8 text-center">
-          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 text-primary">
-            <Shield className="w-6 h-6" />
+    <AuthShell
+      title="Welcome back"
+      subtitle="Sign in to manage feature flags and environments across your systems."
+    >
+      <Card variant="terminal" className="shadow-neon-sm" data-testid="login-card">
+        <CardContent className="p-8 pt-4">
+          <div className="mb-6 flex justify-center">
+            <div className="flex h-12 w-12 items-center justify-center border border-accent bg-accent/10 text-accent cyber-chamfer-sm">
+              <Shield className="h-6 w-6" aria-hidden />
+            </div>
           </div>
-          <h1 className="text-2xl font-bold">Welcome to Aura</h1>
-          <p className="text-muted-foreground mt-2 text-sm">Sign in to manage your feature flags</p>
-        </div>
 
-        <div className="bg-card border border-border/50 rounded-xl shadow-lg p-6 backdrop-blur-xl">
-          {error && (
-            <div className="mb-4 p-3 bg-destructive/15 text-destructive rounded-lg text-sm border border-destructive/20">
+          {flash ? (
+            <div className="mb-4 cyber-chamfer-sm border border-success bg-success/10 px-4 py-3 font-mono text-sm uppercase text-success">
+              {flash}
+            </div>
+          ) : null}
+
+          {error ? (
+            <div className="mb-4 cyber-chamfer-sm border border-destructive bg-destructive/10 px-4 py-3 font-mono text-sm uppercase text-destructive">
               {error}
             </div>
-          )}
+          ) : null}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                Email
-              </label>
-              <input
+          <form onSubmit={(e) => void handleSubmit(e)} className="space-y-6">
+            <div className="space-y-3">
+              <Label htmlFor="login-email">Email</Label>
+              <Input
+                id="login-email"
                 type="email"
                 required
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="admin@example.com"
+                data-testid="login-email"
               />
             </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                Password
-              </label>
-              <input
+            <div className="space-y-3">
+              <Label htmlFor="login-password">Password</Label>
+              <Input
+                id="login-password"
                 type="password"
                 required
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="••••••••"
+                data-testid="login-password"
               />
             </div>
-
-            <button
+            <Button
               type="submit"
+              variant="glitch"
+              className="w-full mt-4"
               disabled={loading}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full mt-2"
+              data-testid="login-submit"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
-            </button>
+              {loading ? 'SIGNING IN...' : 'SIGN IN'}
+            </Button>
           </form>
-        </div>
-      </div>
-    </div>
+
+          <p className="mt-8 text-center text-sm font-mono text-muted-foreground uppercase">
+            No account?{' '}
+            <Link
+              to="/register"
+              className="font-bold text-accent hover:underline hover:text-accentSecondary transition-colors"
+            >
+              Request Access
+            </Link>
+          </p>
+        </CardContent>
+      </Card>
+    </AuthShell>
   );
 }

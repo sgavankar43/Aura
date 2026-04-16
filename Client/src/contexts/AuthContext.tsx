@@ -1,11 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-}
+import { apiFetch } from '@/lib/api';
+import type { User } from '@/types/domain';
 
 interface AuthContextType {
   user: User | null;
@@ -30,31 +25,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        const res = await fetch('/api/auth/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (res.ok) {
-          const contentType = res.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-            const data = await res.json();
-            setUser(data.user);
-          } else {
-            setToken(null);
-            localStorage.removeItem('aura_token');
-          }
-        } else {
-          setToken(null);
-          localStorage.removeItem('aura_token');
-        }
-      } catch (err) {
-        console.error('Failed to restore session', err);
+        const data = await apiFetch<{ user: User }>('/auth/me');
+        setUser(data.user);
+      } catch {
+        setToken(null);
+        localStorage.removeItem('aura_token');
+        setUser(null);
       } finally {
         setIsLoading(false);
       }
     }
 
-    checkAuth();
+    void checkAuth();
   }, [token]);
 
   const login = (newToken: string, newUser: User) => {
