@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "id": "notfound",
+      "label": "NotFound.tsx",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/NotFound.tsx",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "notfound",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/NotFound.tsx",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "notfound",
+      "target": "react_router_dom",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/NotFound.tsx",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "notfound",
+      "target": "button_variants",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/NotFound.tsx",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "notfound",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/NotFound.tsx",
+      "source_location": "L4",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "flag_models",
+      "label": "flag.models.js",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/models/flag.models.js",
+      "source_location": "L1"
+    }
+  ],
+  "edges": []
+}

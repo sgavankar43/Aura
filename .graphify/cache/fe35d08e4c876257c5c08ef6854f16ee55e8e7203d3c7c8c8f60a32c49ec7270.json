@@ -1,0 +1,151 @@
+{
+  "nodes": [
+    {
+      "id": "projectsettings",
+      "label": "ProjectSettings.tsx",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "projectsettings_handlesave",
+      "label": "handleSave()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L26"
+    },
+    {
+      "id": "projectsettings_copykey",
+      "label": "copyKey()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L42"
+    },
+    {
+      "id": "projectsettings_handlearchive",
+      "label": "handleArchive()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L52"
+    }
+  ],
+  "edges": [
+    {
+      "source": "projectsettings",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "react_router_dom",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L4",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "card",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L5",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "input",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L6",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "label",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L7",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "modal",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L8",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "queries",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L9",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "domain",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L10",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "projectsettings_handlesave",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L26",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "projectsettings_copykey",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L42",
+      "weight": 1
+    },
+    {
+      "source": "projectsettings",
+      "target": "projectsettings_handlearchive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectSettings.tsx",
+      "source_location": "L52",
+      "weight": 1
+    }
+  ]
+}

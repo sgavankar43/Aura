@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    {
+      "id": "health_controller",
+      "label": "health.controller.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/health.controller.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "health_controller_healthcheck",
+      "label": "healthCheck()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/health.controller.ts",
+      "source_location": "L22"
+    },
+    {
+      "id": "health_controller_readinesscheck",
+      "label": "readinessCheck()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/health.controller.ts",
+      "source_location": "L41"
+    }
+  ],
+  "edges": [
+    {
+      "source": "health_controller",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/health.controller.ts",
+      "source_location": "L8",
+      "weight": 1
+    },
+    {
+      "source": "health_controller",
+      "target": "health_controller_healthcheck",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/health.controller.ts",
+      "source_location": "L22",
+      "weight": 1
+    },
+    {
+      "source": "health_controller",
+      "target": "health_controller_readinesscheck",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/health.controller.ts",
+      "source_location": "L41",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "errorhandler_d",
+      "label": "errorHandler.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/middleware/errorHandler.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "errorhandler_d",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/middleware/errorHandler.d.ts",
+      "source_location": "L7",
+      "weight": 1
+    }
+  ]
+}

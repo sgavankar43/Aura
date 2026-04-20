@@ -1,0 +1,111 @@
+{
+  "nodes": [
+    {
+      "id": "pubsub_service",
+      "label": "pubsub.service.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "pubsub_service_pubsubservice",
+      "label": "PubSubService",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "pubsub_service_pubsubservice_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "pubsub_service_pubsubservice_create",
+      "label": ".create()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L36"
+    },
+    {
+      "id": "pubsub_service_pubsubservice_publishflagupdate",
+      "label": ".publishFlagUpdate()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L57"
+    },
+    {
+      "id": "pubsub_service_pubsubservice_disconnect",
+      "label": ".disconnect()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L66"
+    }
+  ],
+  "edges": [
+    {
+      "source": "pubsub_service",
+      "target": "ioredis",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L15",
+      "weight": 1
+    },
+    {
+      "source": "pubsub_service",
+      "target": "flag_models_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L16",
+      "weight": 1
+    },
+    {
+      "source": "pubsub_service",
+      "target": "pubsub_service_pubsubservice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L21",
+      "weight": 1
+    },
+    {
+      "source": "pubsub_service_pubsubservice",
+      "target": "pubsub_service_pubsubservice_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L28",
+      "weight": 1
+    },
+    {
+      "source": "pubsub_service_pubsubservice",
+      "target": "pubsub_service_pubsubservice_create",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L36",
+      "weight": 1
+    },
+    {
+      "source": "pubsub_service_pubsubservice",
+      "target": "pubsub_service_pubsubservice_publishflagupdate",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L57",
+      "weight": 1
+    },
+    {
+      "source": "pubsub_service_pubsubservice",
+      "target": "pubsub_service_pubsubservice_disconnect",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/services/pubsub.service.ts",
+      "source_location": "L66",
+      "weight": 1
+    }
+  ]
+}

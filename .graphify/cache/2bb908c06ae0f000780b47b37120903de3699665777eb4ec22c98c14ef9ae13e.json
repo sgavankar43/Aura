@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    {
+      "id": "logger",
+      "label": "logger.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "logger_redactsensitive",
+      "label": "redactSensitive()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L41"
+    },
+    {
+      "id": "logger_getcurrentlevel",
+      "label": "getCurrentLevel()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L69"
+    },
+    {
+      "id": "logger_formatmessage",
+      "label": "formatMessage()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L74"
+    }
+  ],
+  "edges": [
+    {
+      "source": "logger",
+      "target": "logger_redactsensitive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L41",
+      "weight": 1
+    },
+    {
+      "source": "logger",
+      "target": "logger_getcurrentlevel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L69",
+      "weight": 1
+    },
+    {
+      "source": "logger",
+      "target": "logger_formatmessage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L74",
+      "weight": 1
+    },
+    {
+      "source": "logger_formatmessage",
+      "target": "logger_redactsensitive",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/utils/logger.ts",
+      "source_location": "L79",
+      "weight": 1
+    }
+  ]
+}

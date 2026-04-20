@@ -1,0 +1,115 @@
+{
+  "nodes": [
+    {
+      "id": "init",
+      "label": "init.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "init_init",
+      "label": "init()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L39"
+    },
+    {
+      "id": "init_createstorage",
+      "label": "createStorage()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "init_fetchflags",
+      "label": "fetchFlags()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L80"
+    }
+  ],
+  "edges": [
+    {
+      "source": "init",
+      "target": "client_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L17",
+      "weight": 1
+    },
+    {
+      "source": "init",
+      "target": "storage_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L18",
+      "weight": 1
+    },
+    {
+      "source": "init",
+      "target": "transport_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L19",
+      "weight": 1
+    },
+    {
+      "source": "init",
+      "target": "types_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L20",
+      "weight": 1
+    },
+    {
+      "source": "init",
+      "target": "init_init",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L39",
+      "weight": 1
+    },
+    {
+      "source": "init",
+      "target": "init_createstorage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L67",
+      "weight": 1
+    },
+    {
+      "source": "init",
+      "target": "init_fetchflags",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L80",
+      "weight": 1
+    },
+    {
+      "source": "init_init",
+      "target": "init_createstorage",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L43",
+      "weight": 1
+    },
+    {
+      "source": "init_init",
+      "target": "init_fetchflags",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/init.ts",
+      "source_location": "L48",
+      "weight": 1
+    }
+  ]
+}

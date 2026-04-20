@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "playwright_config",
+      "label": "playwright.config.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/playwright.config.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "playwright_config",
+      "target": "test",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/playwright.config.ts",
+      "source_location": "L1",
+      "weight": 1
+    }
+  ]
+}

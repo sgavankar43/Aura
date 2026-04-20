@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "domain",
+      "label": "domain.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/types/domain.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": []
+}

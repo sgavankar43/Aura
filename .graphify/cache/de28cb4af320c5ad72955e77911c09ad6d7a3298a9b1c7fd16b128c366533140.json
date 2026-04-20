@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "index_d",
+      "label": "index.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/index.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": []
+}

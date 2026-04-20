@@ -1,0 +1,65 @@
+{
+  "nodes": [
+    {
+      "id": "modal",
+      "label": "Modal.tsx",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/ui/Modal.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "modal_oncancel",
+      "label": "onCancel()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/ui/Modal.tsx",
+      "source_location": "L46"
+    }
+  ],
+  "edges": [
+    {
+      "source": "modal",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/ui/Modal.tsx",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "modal",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/ui/Modal.tsx",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "modal",
+      "target": "button",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/ui/Modal.tsx",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "modal",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/ui/Modal.tsx",
+      "source_location": "L4",
+      "weight": 1
+    },
+    {
+      "source": "modal",
+      "target": "modal_oncancel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/ui/Modal.tsx",
+      "source_location": "L46",
+      "weight": 1
+    }
+  ]
+}

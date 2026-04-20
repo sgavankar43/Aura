@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    {
+      "id": "audit_controller",
+      "label": "audit.controller.js",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/audit.controller.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "audit_controller_getauditlogs",
+      "label": "getAuditLogs()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/audit.controller.js",
+      "source_location": "L3"
+    }
+  ],
+  "edges": [
+    {
+      "source": "audit_controller",
+      "target": "client",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/audit.controller.js",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "audit_controller",
+      "target": "audit_controller_getauditlogs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/audit.controller.js",
+      "source_location": "L3",
+      "weight": 1
+    }
+  ]
+}

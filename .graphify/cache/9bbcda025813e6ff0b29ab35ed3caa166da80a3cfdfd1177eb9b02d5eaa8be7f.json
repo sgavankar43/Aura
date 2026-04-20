@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "auth_routes_d",
+      "label": "auth.routes.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/routes/auth.routes.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,143 @@
+{
+  "nodes": [
+    {
+      "id": "projects_controller",
+      "label": "projects.controller.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "projects_controller_listprojects",
+      "label": "listProjects()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "projects_controller_createproject",
+      "label": "createProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "projects_controller_getproject",
+      "label": "getProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L49"
+    },
+    {
+      "id": "projects_controller_updateproject",
+      "label": "updateProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "projects_controller_archiveproject",
+      "label": "archiveProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L82"
+    },
+    {
+      "id": "projects_controller_listenvironments",
+      "label": "listEnvironments()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L97"
+    },
+    {
+      "id": "projects_controller_createenvironment",
+      "label": "createEnvironment()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L109"
+    }
+  ],
+  "edges": [
+    {
+      "source": "projects_controller",
+      "target": "client",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "projects_controller_listprojects",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L7",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "projects_controller_createproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L19",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "projects_controller_getproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L49",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "projects_controller_updateproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L67",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "projects_controller_archiveproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L82",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "projects_controller_listenvironments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L97",
+      "weight": 1
+    },
+    {
+      "source": "projects_controller",
+      "target": "projects_controller_createenvironment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/projects.controller.ts",
+      "source_location": "L109",
+      "weight": 1
+    }
+  ]
+}

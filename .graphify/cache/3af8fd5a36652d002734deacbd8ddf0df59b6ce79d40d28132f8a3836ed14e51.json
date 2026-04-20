@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "auth_controller",
+      "label": "auth.controller.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "auth_controller_register",
+      "label": "register()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L11"
+    },
+    {
+      "id": "auth_controller_login",
+      "label": "login()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L46"
+    },
+    {
+      "id": "auth_controller_me",
+      "label": "me()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L81"
+    }
+  ],
+  "edges": [
+    {
+      "source": "auth_controller",
+      "target": "client",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "auth_controller",
+      "target": "bcrypt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "auth_controller",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "auth_controller",
+      "target": "jsonwebtoken",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L4",
+      "weight": 1
+    },
+    {
+      "source": "auth_controller",
+      "target": "auth_controller_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L11",
+      "weight": 1
+    },
+    {
+      "source": "auth_controller",
+      "target": "auth_controller_login",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L46",
+      "weight": 1
+    },
+    {
+      "source": "auth_controller",
+      "target": "auth_controller_me",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/controllers/auth.controller.ts",
+      "source_location": "L81",
+      "weight": 1
+    }
+  ]
+}

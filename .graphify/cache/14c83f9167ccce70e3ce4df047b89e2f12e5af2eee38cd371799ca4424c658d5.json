@@ -1,0 +1,56 @@
+{
+  "nodes": [
+    {
+      "id": "index",
+      "label": "index.js",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/config/index.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "index_loadconfig",
+      "label": "loadConfig()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/config/index.js",
+      "source_location": "L20"
+    }
+  ],
+  "edges": [
+    {
+      "source": "index",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/config/index.js",
+      "source_location": "L7",
+      "weight": 1
+    },
+    {
+      "source": "index",
+      "target": "dotenv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/config/index.js",
+      "source_location": "L8",
+      "weight": 1
+    },
+    {
+      "source": "index",
+      "target": "zod",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/config/index.js",
+      "source_location": "L9",
+      "weight": 1
+    },
+    {
+      "source": "index",
+      "target": "index_loadconfig",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/config/index.js",
+      "source_location": "L20",
+      "weight": 1
+    }
+  ]
+}

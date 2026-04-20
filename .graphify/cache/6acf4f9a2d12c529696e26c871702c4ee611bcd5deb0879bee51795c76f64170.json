@@ -1,0 +1,170 @@
+{
+  "nodes": [
+    {
+      "id": "websocket_gateway",
+      "label": "websocket.gateway.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "websocket_gateway_websocketgateway",
+      "label": "WebSocketGateway",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L39"
+    },
+    {
+      "id": "websocket_gateway_websocketgateway_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "websocket_gateway_websocketgateway_initialize",
+      "label": ".initialize()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L52"
+    },
+    {
+      "id": "websocket_gateway_websocketgateway_setupauthmiddleware",
+      "label": ".setupAuthMiddleware()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "websocket_gateway_websocketgateway_setupconnectionhandler",
+      "label": ".setupConnectionHandler()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L89"
+    },
+    {
+      "id": "websocket_gateway_websocketgateway_subscribetoredis",
+      "label": ".subscribeToRedis()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L102"
+    },
+    {
+      "id": "websocket_gateway_websocketgateway_shutdown",
+      "label": ".shutdown()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L131"
+    }
+  ],
+  "edges": [
+    {
+      "source": "websocket_gateway",
+      "target": "socket_io",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L23",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway",
+      "target": "flag_models_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L24",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway",
+      "target": "websocket_gateway_websocketgateway",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L39",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway",
+      "target": "websocket_gateway_websocketgateway_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L40",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway",
+      "target": "websocket_gateway_websocketgateway_initialize",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L52",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway",
+      "target": "websocket_gateway_websocketgateway_setupauthmiddleware",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L67",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway",
+      "target": "websocket_gateway_websocketgateway_setupconnectionhandler",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L89",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway",
+      "target": "websocket_gateway_websocketgateway_subscribetoredis",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L102",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway",
+      "target": "websocket_gateway_websocketgateway_shutdown",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L131",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway_initialize",
+      "target": "websocket_gateway_websocketgateway_setupauthmiddleware",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L53",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway_initialize",
+      "target": "websocket_gateway_websocketgateway_setupconnectionhandler",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L54",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_websocketgateway_initialize",
+      "target": "websocket_gateway_websocketgateway_subscribetoredis",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/src/gateways/websocket.gateway.ts",
+      "source_location": "L55",
+      "weight": 1
+    }
+  ]
+}

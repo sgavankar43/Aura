@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "securityaudit_d",
+      "label": "securityAudit.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/middleware/securityAudit.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "securityaudit_d",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/middleware/securityAudit.d.ts",
+      "source_location": "L13",
+      "weight": 1
+    }
+  ]
+}

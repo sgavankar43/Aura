@@ -1,0 +1,93 @@
+{
+  "nodes": [
+    {
+      "id": "flag_service",
+      "label": "flag.service.js",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "flag_service_flagservice",
+      "label": "FlagService",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L14"
+    },
+    {
+      "id": "flag_service_flagservice_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L17"
+    },
+    {
+      "id": "flag_service_flagservice_evaluateflag",
+      "label": ".evaluateFlag()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L30"
+    },
+    {
+      "id": "flag_service_flagservice_evaluateallflags",
+      "label": ".evaluateAllFlags()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L55"
+    },
+    {
+      "id": "flag_service_flagservice_updateflagstate",
+      "label": ".updateFlagState()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L87"
+    }
+  ],
+  "edges": [
+    {
+      "source": "flag_service",
+      "target": "flag_service_flagservice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L14",
+      "weight": 1
+    },
+    {
+      "source": "flag_service_flagservice",
+      "target": "flag_service_flagservice_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L17",
+      "weight": 1
+    },
+    {
+      "source": "flag_service_flagservice",
+      "target": "flag_service_flagservice_evaluateflag",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L30",
+      "weight": 1
+    },
+    {
+      "source": "flag_service_flagservice",
+      "target": "flag_service_flagservice_evaluateallflags",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L55",
+      "weight": 1
+    },
+    {
+      "source": "flag_service_flagservice",
+      "target": "flag_service_flagservice_updateflagstate",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/services/flag.service.js",
+      "source_location": "L87",
+      "weight": 1
+    }
+  ]
+}

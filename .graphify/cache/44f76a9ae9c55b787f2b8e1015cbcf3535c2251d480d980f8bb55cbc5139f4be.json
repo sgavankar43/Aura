@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "security_d",
+      "label": "security.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/middleware/security.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "security_d",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/middleware/security.d.ts",
+      "source_location": "L11",
+      "weight": 1
+    }
+  ]
+}

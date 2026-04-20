@@ -1,0 +1,47 @@
+{
+  "nodes": [
+    {
+      "id": "websocket_gateway_d",
+      "label": "websocket.gateway.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/gateways/websocket.gateway.d.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "websocket_gateway_d_websocketgateway",
+      "label": "WebSocketGateway",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/gateways/websocket.gateway.d.ts",
+      "source_location": "L33"
+    }
+  ],
+  "edges": [
+    {
+      "source": "websocket_gateway_d",
+      "target": "socket_io",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/gateways/websocket.gateway.d.ts",
+      "source_location": "L22",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_d",
+      "target": "flag_models_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/gateways/websocket.gateway.d.ts",
+      "source_location": "L23",
+      "weight": 1
+    },
+    {
+      "source": "websocket_gateway_d",
+      "target": "websocket_gateway_d_websocketgateway",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/gateways/websocket.gateway.d.ts",
+      "source_location": "L33",
+      "weight": 1
+    }
+  ]
+}

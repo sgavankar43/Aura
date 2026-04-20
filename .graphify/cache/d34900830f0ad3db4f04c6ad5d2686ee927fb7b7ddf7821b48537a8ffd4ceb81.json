@@ -1,0 +1,56 @@
+{
+  "nodes": [
+    {
+      "id": "realtimeprovider",
+      "label": "RealTimeProvider.tsx",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/contexts/RealTimeProvider.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "realtimeprovider_realtimeprovider",
+      "label": "RealTimeProvider()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/contexts/RealTimeProvider.tsx",
+      "source_location": "L11"
+    }
+  ],
+  "edges": [
+    {
+      "source": "realtimeprovider",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/contexts/RealTimeProvider.tsx",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "realtimeprovider",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/contexts/RealTimeProvider.tsx",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "realtimeprovider",
+      "target": "authcontext",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/contexts/RealTimeProvider.tsx",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "realtimeprovider",
+      "target": "realtimeprovider_realtimeprovider",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/contexts/RealTimeProvider.tsx",
+      "source_location": "L11",
+      "weight": 1
+    }
+  ]
+}

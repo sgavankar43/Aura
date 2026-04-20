@@ -1,0 +1,99 @@
+{
+  "nodes": [
+    {
+      "id": "projectdetail",
+      "label": "ProjectDetail.tsx",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "projectdetail_tabclass",
+      "label": "tabClass()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "projectdetail_projectdetail",
+      "label": "ProjectDetail()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L16"
+    }
+  ],
+  "edges": [
+    {
+      "source": "projectdetail",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "projectdetail",
+      "target": "react_router_dom",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "projectdetail",
+      "target": "pageloader",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "projectdetail",
+      "target": "queries",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L4",
+      "weight": 1
+    },
+    {
+      "source": "projectdetail",
+      "target": "api",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L5",
+      "weight": 1
+    },
+    {
+      "source": "projectdetail",
+      "target": "utils",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L6",
+      "weight": 1
+    },
+    {
+      "source": "projectdetail",
+      "target": "projectdetail_tabclass",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L8",
+      "weight": 1
+    },
+    {
+      "source": "projectdetail",
+      "target": "projectdetail_projectdetail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/pages/ProjectDetail.tsx",
+      "source_location": "L16",
+      "weight": 1
+    }
+  ]
+}

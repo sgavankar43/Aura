@@ -1,0 +1,45 @@
+{
+  "nodes": [
+    {
+      "id": "health_controller",
+      "label": "health.controller.js",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/health.controller.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "health_controller_healthcheck",
+      "label": "healthCheck()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/health.controller.js",
+      "source_location": "L11"
+    },
+    {
+      "id": "health_controller_readinesscheck",
+      "label": "readinessCheck()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/health.controller.js",
+      "source_location": "L28"
+    }
+  ],
+  "edges": [
+    {
+      "source": "health_controller",
+      "target": "health_controller_healthcheck",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/health.controller.js",
+      "source_location": "L11",
+      "weight": 1
+    },
+    {
+      "source": "health_controller",
+      "target": "health_controller_readinesscheck",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/health.controller.js",
+      "source_location": "L28",
+      "weight": 1
+    }
+  ]
+}

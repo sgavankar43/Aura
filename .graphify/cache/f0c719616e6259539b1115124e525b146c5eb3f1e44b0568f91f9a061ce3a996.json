@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    {
+      "id": "logger",
+      "label": "logger.js",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "logger_redactsensitive",
+      "label": "redactSensitive()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L35"
+    },
+    {
+      "id": "logger_getcurrentlevel",
+      "label": "getCurrentLevel()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L59"
+    },
+    {
+      "id": "logger_formatmessage",
+      "label": "formatMessage()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L63"
+    }
+  ],
+  "edges": [
+    {
+      "source": "logger",
+      "target": "logger_redactsensitive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L35",
+      "weight": 1
+    },
+    {
+      "source": "logger",
+      "target": "logger_getcurrentlevel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L59",
+      "weight": 1
+    },
+    {
+      "source": "logger",
+      "target": "logger_formatmessage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L63",
+      "weight": 1
+    },
+    {
+      "source": "logger_formatmessage",
+      "target": "logger_redactsensitive",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/utils/logger.js",
+      "source_location": "L68",
+      "weight": 1
+    }
+  ]
+}

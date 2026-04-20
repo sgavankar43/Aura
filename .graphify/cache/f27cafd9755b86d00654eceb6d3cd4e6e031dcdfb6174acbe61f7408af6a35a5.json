@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "health_routes_d",
+      "label": "health.routes.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/routes/health.routes.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": []
+}

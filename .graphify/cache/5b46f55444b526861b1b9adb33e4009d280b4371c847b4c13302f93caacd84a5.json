@@ -1,0 +1,216 @@
+{
+  "nodes": [
+    {
+      "id": "queries",
+      "label": "queries.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "queries_useprojects",
+      "label": "useProjects()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "queries_usecreateproject",
+      "label": "useCreateProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "queries_useproject",
+      "label": "useProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L27"
+    },
+    {
+      "id": "queries_useupdateproject",
+      "label": "useUpdateProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L38"
+    },
+    {
+      "id": "queries_usearchiveproject",
+      "label": "useArchiveProject()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L53"
+    },
+    {
+      "id": "queries_usefeatures",
+      "label": "useFeatures()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L65"
+    },
+    {
+      "id": "queries_usecreatefeature",
+      "label": "useCreateFeature()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L76"
+    },
+    {
+      "id": "queries_usecreateenvironment",
+      "label": "useCreateEnvironment()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L97"
+    },
+    {
+      "id": "queries_usetoggleflag",
+      "label": "useToggleFlag()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L111"
+    },
+    {
+      "id": "queries_useauditlogs",
+      "label": "useAuditLogs()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L159"
+    },
+    {
+      "id": "queries_usehealth",
+      "label": "useHealth()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L173"
+    }
+  ],
+  "edges": [
+    {
+      "source": "queries",
+      "target": "react_query",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "api",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "domain",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_useprojects",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L5",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_usecreateproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L15",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_useproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L27",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_useupdateproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L38",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_usearchiveproject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L53",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_usefeatures",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L65",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_usecreatefeature",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L76",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_usecreateenvironment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L97",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_usetoggleflag",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L111",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_useauditlogs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L159",
+      "weight": 1
+    },
+    {
+      "source": "queries",
+      "target": "queries_usehealth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/hooks/queries.ts",
+      "source_location": "L173",
+      "weight": 1
+    }
+  ]
+}

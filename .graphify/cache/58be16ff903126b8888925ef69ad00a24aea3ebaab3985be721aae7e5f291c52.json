@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "health_controller_d",
+      "label": "health.controller.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/health.controller.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "health_controller_d",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/controllers/health.controller.d.ts",
+      "source_location": "L7",
+      "weight": 1
+    }
+  ]
+}

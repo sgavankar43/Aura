@@ -1,0 +1,166 @@
+{
+  "nodes": [
+    {
+      "id": "storage",
+      "label": "storage.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "storage_memorystorage",
+      "label": "MemoryStorage",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "storage_memorystorage_save",
+      "label": ".save()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "storage_memorystorage_load",
+      "label": ".load()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "storage_memorystorage_clear",
+      "label": ".clear()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L32"
+    },
+    {
+      "id": "storage_browserstorage",
+      "label": "BrowserStorage",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L45"
+    },
+    {
+      "id": "storage_browserstorage_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L46"
+    },
+    {
+      "id": "storage_browserstorage_save",
+      "label": ".save()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L48"
+    },
+    {
+      "id": "storage_browserstorage_load",
+      "label": ".load()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L57"
+    },
+    {
+      "id": "storage_browserstorage_clear",
+      "label": ".clear()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L69"
+    }
+  ],
+  "edges": [
+    {
+      "source": "storage",
+      "target": "types_js",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L11",
+      "weight": 1
+    },
+    {
+      "source": "storage",
+      "target": "storage_memorystorage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L21",
+      "weight": 1
+    },
+    {
+      "source": "storage_memorystorage",
+      "target": "storage_memorystorage_save",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L24",
+      "weight": 1
+    },
+    {
+      "source": "storage_memorystorage",
+      "target": "storage_memorystorage_load",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L28",
+      "weight": 1
+    },
+    {
+      "source": "storage_memorystorage",
+      "target": "storage_memorystorage_clear",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L32",
+      "weight": 1
+    },
+    {
+      "source": "storage",
+      "target": "storage_browserstorage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L45",
+      "weight": 1
+    },
+    {
+      "source": "storage_browserstorage",
+      "target": "storage_browserstorage_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L46",
+      "weight": 1
+    },
+    {
+      "source": "storage_browserstorage",
+      "target": "storage_browserstorage_save",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L48",
+      "weight": 1
+    },
+    {
+      "source": "storage_browserstorage",
+      "target": "storage_browserstorage_load",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L57",
+      "weight": 1
+    },
+    {
+      "source": "storage_browserstorage",
+      "target": "storage_browserstorage_clear",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/SDK/src/storage.ts",
+      "source_location": "L69",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "app_d",
+      "label": "app.d.ts",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/app.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "app_d",
+      "target": "express",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Server/dist/app.d.ts",
+      "source_location": "L19",
+      "weight": 1
+    }
+  ]
+}

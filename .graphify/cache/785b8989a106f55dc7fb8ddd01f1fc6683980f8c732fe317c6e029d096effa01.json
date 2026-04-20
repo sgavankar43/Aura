@@ -1,0 +1,56 @@
+{
+  "nodes": [
+    {
+      "id": "authshell",
+      "label": "AuthShell.tsx",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/auth/AuthShell.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "authshell_authshell",
+      "label": "AuthShell()",
+      "file_type": "code",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/auth/AuthShell.tsx",
+      "source_location": "L5"
+    }
+  ],
+  "edges": [
+    {
+      "source": "authshell",
+      "target": "lucide_react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/auth/AuthShell.tsx",
+      "source_location": "L1",
+      "weight": 1
+    },
+    {
+      "source": "authshell",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/auth/AuthShell.tsx",
+      "source_location": "L2",
+      "weight": 1
+    },
+    {
+      "source": "authshell",
+      "target": "react_router_dom",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/auth/AuthShell.tsx",
+      "source_location": "L3",
+      "weight": 1
+    },
+    {
+      "source": "authshell",
+      "target": "authshell_authshell",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/Users/sahilgavankar/Desktop/Aura/Client/src/components/auth/AuthShell.tsx",
+      "source_location": "L5",
+      "weight": 1
+    }
+  ]
+}
