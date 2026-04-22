@@ -10,12 +10,14 @@
  * 4. updateFlagState returns null for invalid environment/feature
  * 5. FlagService works without PubSub (optional dependency)
  * 6. Updated flag state is reflected in subsequent evaluateFlag calls
+ * 7. (Milestone 5) correlationId in FlagUpdateEvent matches context requestId
  *
  * Architecture: Uses InMemoryFlagRepository (fake) and a mock IPubSubService.
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import type {
+  AuraContext,
   Feature,
   Environment,
   IPubSubService,
@@ -42,6 +44,12 @@ function createMockPubSub(): IPubSubService & { publishFlagUpdate: ReturnType<ty
 const PROJECT_ID = 'project-001';
 const ENV_DEV_ID = 'env-dev-001';
 const ENV_PROD_ID = 'env-prod-001';
+
+/** Default AuraContext for test tracing */
+const TEST_CTX: AuraContext = {
+  requestId: 'test-req-svc-001',
+  userId: 'test-user',
+};
 
 const devEnvironment: Environment = {
   id: ENV_DEV_ID,
@@ -103,6 +111,7 @@ describe('FlagService — updateFlagState + PubSub', () => {
   describe('persisting flag state', () => {
     it('should create a new FlagState when none exists', async () => {
       const result = await flagService.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         'dev',
         'dark-mode',
@@ -118,9 +127,10 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
     it('should update an existing FlagState', async () => {
       // First create
-      await flagService.updateFlagState(PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
+      await flagService.updateFlagState(TEST_CTX, PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
       // Then update
       const result = await flagService.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         'dev',
         'dark-mode',
@@ -134,15 +144,15 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
     it('should reflect the change in subsequent evaluateFlag calls', async () => {
       // Before update: no FlagState → fallback to default (false)
-      const before = await flagService.evaluateFlag(PROJECT_ID, 'dev', 'dark-mode');
+      const before = await flagService.evaluateFlag(TEST_CTX, PROJECT_ID, 'dev', 'dark-mode');
       expect(before.enabled).toBe(false);
       expect(before.source).toBe('default');
 
       // Perform update
-      await flagService.updateFlagState(PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
+      await flagService.updateFlagState(TEST_CTX, PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
 
       // After update: FlagState exists → true
-      const after = await flagService.evaluateFlag(PROJECT_ID, 'dev', 'dark-mode');
+      const after = await flagService.evaluateFlag(TEST_CTX, PROJECT_ID, 'dev', 'dark-mode');
       expect(after.enabled).toBe(true);
       expect(after.source).toBe('flag_state');
     });
@@ -154,13 +164,13 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
   describe('PubSub broadcasting', () => {
     it('should call publishFlagUpdate after persisting the change', async () => {
-      await flagService.updateFlagState(PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
+      await flagService.updateFlagState(TEST_CTX, PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
 
       expect(mockPubSub.publishFlagUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should publish a FlagUpdateEvent with the correct fields', async () => {
-      await flagService.updateFlagState(PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
+      await flagService.updateFlagState(TEST_CTX, PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
 
       const publishedEvent = mockPubSub.publishFlagUpdate.mock.calls[0][0] as FlagUpdateEvent;
 
@@ -174,10 +184,20 @@ describe('FlagService — updateFlagState + PubSub', () => {
       expect(new Date(publishedEvent.timestamp).toISOString()).toBe(publishedEvent.timestamp);
     });
 
+    it('should include correlationId matching the context requestId (Milestone 5)', async () => {
+      const ctx: AuraContext = { requestId: 'trace-corr-12345', userId: 'admin-1' };
+
+      await flagService.updateFlagState(ctx, PROJECT_ID, 'dev', 'dark-mode', true, 'user-123');
+
+      const publishedEvent = mockPubSub.publishFlagUpdate.mock.calls[0][0] as FlagUpdateEvent;
+      expect(publishedEvent.correlationId).toBe('trace-corr-12345');
+    });
+
     it('should report published=true and subscriber count on success', async () => {
       mockPubSub.publishFlagUpdate.mockResolvedValue(5);
 
       const result = await flagService.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         'dev',
         'dark-mode',
@@ -193,6 +213,7 @@ describe('FlagService — updateFlagState + PubSub', () => {
       mockPubSub.publishFlagUpdate.mockRejectedValue(new Error('Redis down'));
 
       const result = await flagService.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         'dev',
         'dark-mode',
@@ -210,6 +231,7 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
     it('should not call PubSub when feature is not found', async () => {
       const result = await flagService.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         'dev',
         'nonexistent',
@@ -223,6 +245,7 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
     it('should not call PubSub when environment is not found', async () => {
       const result = await flagService.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         'staging',
         'dark-mode',
@@ -244,6 +267,7 @@ describe('FlagService — updateFlagState + PubSub', () => {
       const serviceWithoutPubSub = new FlagService(repository);
 
       const result = await serviceWithoutPubSub.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         'dev',
         'dark-mode',
@@ -264,12 +288,20 @@ describe('FlagService — updateFlagState + PubSub', () => {
 
   describe('edge cases', () => {
     it('should return null for empty project ID', async () => {
-      const result = await flagService.updateFlagState('', 'dev', 'dark-mode', true, 'user-123');
+      const result = await flagService.updateFlagState(
+        TEST_CTX,
+        '',
+        'dev',
+        'dark-mode',
+        true,
+        'user-123',
+      );
       expect(result).toBeNull();
     });
 
     it('should return null for empty environment slug', async () => {
       const result = await flagService.updateFlagState(
+        TEST_CTX,
         PROJECT_ID,
         '',
         'dark-mode',
@@ -280,7 +312,14 @@ describe('FlagService — updateFlagState + PubSub', () => {
     });
 
     it('should return null for empty feature key', async () => {
-      const result = await flagService.updateFlagState(PROJECT_ID, 'dev', '', true, 'user-123');
+      const result = await flagService.updateFlagState(
+        TEST_CTX,
+        PROJECT_ID,
+        'dev',
+        '',
+        true,
+        'user-123',
+      );
       expect(result).toBeNull();
     });
   });

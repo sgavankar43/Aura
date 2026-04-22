@@ -207,6 +207,7 @@ describe('WebSocket Gateway', () => {
         enabled: true,
         source: 'user-123',
         timestamp: new Date().toISOString(),
+        correlationId: 'corr-test-001',
       };
       mockRedis.__simulateMessage('aura:flags:updates', JSON.stringify(event));
 
@@ -215,6 +216,7 @@ describe('WebSocket Gateway', () => {
       expect(received.projectId).toBe(PROJECT_A.id);
       expect(received.featureKey).toBe('dark-mode');
       expect(received.enabled).toBe(true);
+      expect(received.correlationId).toBe('corr-test-001');
 
       clientA.disconnect();
     });
@@ -235,6 +237,7 @@ describe('WebSocket Gateway', () => {
         enabled: true,
         source: 'user-123',
         timestamp: new Date().toISOString(),
+        correlationId: 'corr-test-002',
       };
       mockRedis.__simulateMessage('aura:flags:updates', JSON.stringify(event));
 
@@ -260,6 +263,7 @@ describe('WebSocket Gateway', () => {
         enabled: false,
         source: 'system',
         timestamp: new Date().toISOString(),
+        correlationId: 'corr-test-003',
       };
       mockRedis.__simulateMessage('aura:flags:updates', JSON.stringify(event));
 

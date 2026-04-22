@@ -11,13 +11,14 @@
  * 5. Archived features are excluded
  * 6. Invalid environment slug returns empty/error
  * 7. Edge cases: null project, empty feature key, etc.
+ * 8. (Milestone 5) Logs include requestId when AuraContext is provided
  *
  * Architecture: Tests use an InMemoryFlagRepository (fake) instead of
  * Prisma to keep tests fast, isolated, and database-independent.
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
-import type { Feature, Environment, FlagState } from '../models/flag.models.js';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import type { AuraContext, Feature, Environment, FlagState } from '../models/flag.models.js';
 import { FlagService } from '../services/flag.service.js';
 import { InMemoryFlagRepository } from './helpers/InMemoryFlagRepository.js';
 
@@ -28,6 +29,12 @@ import { InMemoryFlagRepository } from './helpers/InMemoryFlagRepository.js';
 const PROJECT_ID = 'project-001';
 const ENV_DEV_ID = 'env-dev-001';
 const ENV_PROD_ID = 'env-prod-001';
+
+/** Default AuraContext for test tracing */
+const TEST_CTX: AuraContext = {
+  requestId: 'test-req-001',
+  userId: 'test-user',
+};
 
 /** Dev environment */
 const devEnvironment: Environment = {
@@ -137,7 +144,7 @@ describe('Flag Engine', () => {
   describe('evaluateFlag — single flag retrieval', () => {
     it('should return the environment-specific state when a FlagState exists', async () => {
       // dark-mode has a FlagState in dev → enabled: true
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'dev', 'dark-mode');
+      const result = await flagService.evaluateFlag(TEST_CTX, PROJECT_ID, 'dev', 'dark-mode');
 
       expect(result.key).toBe('dark-mode');
       expect(result.enabled).toBe(true);
@@ -146,7 +153,7 @@ describe('Flag Engine', () => {
 
     it('should override defaultEnabled when FlagState contradicts it', async () => {
       // new-dashboard: defaultEnabled=true, but prod FlagState says enabled=false
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'prod', 'new-dashboard');
+      const result = await flagService.evaluateFlag(TEST_CTX, PROJECT_ID, 'prod', 'new-dashboard');
 
       expect(result.key).toBe('new-dashboard');
       expect(result.enabled).toBe(false);
@@ -155,7 +162,7 @@ describe('Flag Engine', () => {
 
     it('should fall back to Feature.defaultEnabled when no FlagState exists', async () => {
       // dark-mode has no FlagState in prod → fallback to defaultEnabled (false)
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'prod', 'dark-mode');
+      const result = await flagService.evaluateFlag(TEST_CTX, PROJECT_ID, 'prod', 'dark-mode');
 
       expect(result.key).toBe('dark-mode');
       expect(result.enabled).toBe(false);
@@ -164,7 +171,7 @@ describe('Flag Engine', () => {
 
     it('should fall back to defaultEnabled=true when no FlagState exists', async () => {
       // new-dashboard has no FlagState in dev → fallback to defaultEnabled (true)
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'dev', 'new-dashboard');
+      const result = await flagService.evaluateFlag(TEST_CTX, PROJECT_ID, 'dev', 'new-dashboard');
 
       expect(result.key).toBe('new-dashboard');
       expect(result.enabled).toBe(true);
@@ -172,7 +179,12 @@ describe('Flag Engine', () => {
     });
 
     it('should return not_found for a feature that does not exist', async () => {
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'dev', 'nonexistent-flag');
+      const result = await flagService.evaluateFlag(
+        TEST_CTX,
+        PROJECT_ID,
+        'dev',
+        'nonexistent-flag',
+      );
 
       expect(result.key).toBe('nonexistent-flag');
       expect(result.enabled).toBe(false);
@@ -180,7 +192,12 @@ describe('Flag Engine', () => {
     });
 
     it('should return not_found for an archived feature', async () => {
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'dev', 'deprecated-widget');
+      const result = await flagService.evaluateFlag(
+        TEST_CTX,
+        PROJECT_ID,
+        'dev',
+        'deprecated-widget',
+      );
 
       expect(result.key).toBe('deprecated-widget');
       expect(result.enabled).toBe(false);
@@ -188,7 +205,12 @@ describe('Flag Engine', () => {
     });
 
     it('should return not_found when environment slug is invalid', async () => {
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'nonexistent-env', 'dark-mode');
+      const result = await flagService.evaluateFlag(
+        TEST_CTX,
+        PROJECT_ID,
+        'nonexistent-env',
+        'dark-mode',
+      );
 
       expect(result.key).toBe('dark-mode');
       expect(result.enabled).toBe(false);
@@ -202,7 +224,7 @@ describe('Flag Engine', () => {
 
   describe('evaluateAllFlags — bulk retrieval for a project+environment', () => {
     it('should return all non-archived flags with correct states for dev', async () => {
-      const results = await flagService.evaluateAllFlags(PROJECT_ID, 'dev');
+      const results = await flagService.evaluateAllFlags(TEST_CTX, PROJECT_ID, 'dev');
 
       expect(results).toHaveLength(2); // Excludes archived feature
 
@@ -221,7 +243,7 @@ describe('Flag Engine', () => {
     });
 
     it('should return all non-archived flags with correct states for prod', async () => {
-      const results = await flagService.evaluateAllFlags(PROJECT_ID, 'prod');
+      const results = await flagService.evaluateAllFlags(TEST_CTX, PROJECT_ID, 'prod');
 
       expect(results).toHaveLength(2);
 
@@ -240,15 +262,65 @@ describe('Flag Engine', () => {
     });
 
     it('should return empty array for invalid environment', async () => {
-      const results = await flagService.evaluateAllFlags(PROJECT_ID, 'staging');
+      const results = await flagService.evaluateAllFlags(TEST_CTX, PROJECT_ID, 'staging');
 
       expect(results).toEqual([]);
     });
 
     it('should return empty array for project with no features', async () => {
-      const results = await flagService.evaluateAllFlags('empty-project', 'dev');
+      const results = await flagService.evaluateAllFlags(TEST_CTX, 'empty-project', 'dev');
 
       expect(results).toEqual([]);
+    });
+  });
+
+  // =========================================================================
+  // Milestone 5: Context Propagation
+  // =========================================================================
+
+  describe('context propagation (Milestone 5)', () => {
+    it('should include requestId in logs when context is provided', async () => {
+      // Set log level to debug so evaluateFlag debug logs are emitted
+      const originalLevel = process.env['LOG_LEVEL'];
+      process.env['LOG_LEVEL'] = 'debug';
+
+      const spy = vi.spyOn(console, 'debug').mockImplementation(() => {});
+
+      await flagService.evaluateFlag(
+        { requestId: 'trace-abc-123', userId: 'user-42' },
+        PROJECT_ID,
+        'dev',
+        'dark-mode',
+      );
+
+      // Verify at least one log call includes the requestId
+      const calls = spy.mock.calls.map((c) => c[0] as string);
+      const hasRequestId = calls.some((c) => c.includes('trace-abc-123'));
+      expect(hasRequestId).toBe(true);
+
+      spy.mockRestore();
+      process.env['LOG_LEVEL'] = originalLevel;
+    });
+
+    it('should include userId in logs when context is provided', async () => {
+      const originalLevel = process.env['LOG_LEVEL'];
+      process.env['LOG_LEVEL'] = 'debug';
+
+      const spy = vi.spyOn(console, 'debug').mockImplementation(() => {});
+
+      await flagService.evaluateFlag(
+        { requestId: 'trace-xyz', userId: 'user-99' },
+        PROJECT_ID,
+        'dev',
+        'dark-mode',
+      );
+
+      const calls = spy.mock.calls.map((c) => c[0] as string);
+      const hasUserId = calls.some((c) => c.includes('user-99'));
+      expect(hasUserId).toBe(true);
+
+      spy.mockRestore();
+      process.env['LOG_LEVEL'] = originalLevel;
     });
   });
 
@@ -258,7 +330,7 @@ describe('Flag Engine', () => {
 
   describe('edge cases', () => {
     it('should handle empty feature key gracefully', async () => {
-      const result = await flagService.evaluateFlag(PROJECT_ID, 'dev', '');
+      const result = await flagService.evaluateFlag(TEST_CTX, PROJECT_ID, 'dev', '');
 
       expect(result.key).toBe('');
       expect(result.enabled).toBe(false);
@@ -266,7 +338,7 @@ describe('Flag Engine', () => {
     });
 
     it('should handle empty project ID gracefully', async () => {
-      const result = await flagService.evaluateFlag('', 'dev', 'dark-mode');
+      const result = await flagService.evaluateFlag(TEST_CTX, '', 'dev', 'dark-mode');
 
       expect(result.key).toBe('dark-mode');
       expect(result.enabled).toBe(false);
@@ -274,7 +346,7 @@ describe('Flag Engine', () => {
     });
 
     it('should not return archived features in bulk evaluation', async () => {
-      const results = await flagService.evaluateAllFlags(PROJECT_ID, 'dev');
+      const results = await flagService.evaluateAllFlags(TEST_CTX, PROJECT_ID, 'dev');
       const archived = results.find((r) => r.key === 'deprecated-widget');
 
       expect(archived).toBeUndefined();
