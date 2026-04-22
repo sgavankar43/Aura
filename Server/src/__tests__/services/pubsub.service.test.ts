@@ -42,6 +42,7 @@ const sampleEvent: FlagUpdateEvent = {
   enabled: true,
   source: 'user-123',
   timestamp: '2026-04-11T10:00:00.000Z',
+  correlationId: 'corr-pubsub-001',
 };
 
 // =============================================================================
@@ -93,6 +94,7 @@ describe('PubSubService', () => {
         enabled: true,
         source: 'user-123',
         timestamp: '2026-04-11T10:00:00.000Z',
+        correlationId: 'corr-pubsub-001',
       });
     });
 
@@ -140,6 +142,7 @@ describe('PubSubService', () => {
         enabled: true,
         source: 'ci-pipeline',
         timestamp: '2026-04-11T12:00:00.000Z',
+        correlationId: 'corr-full-001',
       };
 
       await pubsub.publishFlagUpdate(fullEvent);

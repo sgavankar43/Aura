@@ -1,22 +1,38 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/**
+ * Features Controller — CRUD for feature flags + flag toggling.
+ *
+ * Architecture: Controller layer — handles HTTP requests.
+ * Imports from: Prisma (direct), PubSubService.
+ * Imported by: Routes.
+ *
+ * Milestone 5: Constructs AuraContext from the Express request
+ * and threads correlationId through Pub/Sub events.
+ */
+
 import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
-// Removed unused FlagService
+import type { AuraContext } from '../models/flag.models.js';
 import { PubSubService } from '../services/pubsub.service.js';
 
 const prisma = new PrismaClient();
 
-// In a real app we might inject these properly,
-// but for simplicity they're instantiated here.
-const pubSubService = PubSubService.create('redis://localhost:6379');
-// Reusing existing Prisma db connection indirectly?
-// FlagService uses existing flag repository but for the sake of Dashboard
-// we will just use Prisma directly to toggle states to simplify API usage.
-// Actually, modifying flag state via Prisma directly will bypass
-// FlagService.updateFlagState() which publishes the event!
-// We should use FlagService.updateFlagState(). But FlagService requires a repo.
+// Use REDIS_URL from environment (fixes hardcoded URL that bypassed .env password)
+const redisUrl = process.env['REDIS_URL'] || 'redis://localhost:6379';
+const pubSubService = PubSubService.create(redisUrl);
 
-// Let's implement flag state modification
+/**
+ * Build an AuraContext from an Express request.
+ * Extracts requestId from the sanitized x-request-id header
+ * and userId from the authenticated JWT payload.
+ */
+function buildContext(req: Request): AuraContext {
+  return {
+    requestId: (req.headers['x-request-id'] as string) || 'unknown',
+    userId: req.user?.userId,
+  };
+}
+
 export async function listFeatures(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
 
@@ -47,7 +63,7 @@ export async function listFeatures(req: Request, res: Response): Promise<void> {
     });
 
     res.json({ features: reshaped });
-  } catch (err) {
+  } catch (_err) {
     res.status(500).json({ error: 'Failed to list features' });
   }
 }
@@ -84,7 +100,7 @@ export async function createFeature(req: Request, res: Response): Promise<void> 
     });
 
     res.status(201).json({ feature });
-  } catch (err) {
+  } catch (_err) {
     res.status(500).json({ error: 'Failed to create feature' });
   }
 }
@@ -100,7 +116,7 @@ export async function updateFeature(req: Request, res: Response): Promise<void> 
     });
 
     res.json({ feature });
-  } catch (err) {
+  } catch (_err) {
     res.status(500).json({ error: 'Failed to update feature' });
   }
 }
@@ -114,7 +130,7 @@ export async function archiveFeature(req: Request, res: Response): Promise<void>
       data: { archivedAt: new Date() },
     });
     res.json({ feature });
-  } catch (err) {
+  } catch (_err) {
     res.status(500).json({ error: 'Failed to archive feature' });
   }
 }
@@ -123,6 +139,7 @@ export async function archiveFeature(req: Request, res: Response): Promise<void>
 export async function toggleFlag(req: Request, res: Response): Promise<void> {
   const { id, envSlug, key } = req.params;
   const { enabled } = req.body;
+  const ctx = buildContext(req);
 
   if (typeof enabled !== 'boolean') {
     res.status(400).json({ error: 'enabled must be a boolean' });
@@ -165,7 +182,7 @@ export async function toggleFlag(req: Request, res: Response): Promise<void> {
       },
     });
 
-    // Broadcast the update via pub/sub!
+    // Broadcast the update via pub/sub with correlationId for distributed tracing
     await pubSubService.publishFlagUpdate({
       projectId: id,
       environmentId: env.id,
@@ -173,10 +190,11 @@ export async function toggleFlag(req: Request, res: Response): Promise<void> {
       enabled,
       source: req.user!.userId,
       timestamp: new Date().toISOString(),
+      correlationId: ctx.requestId,
     });
 
     res.json({ flagState });
-  } catch (err) {
+  } catch (_err) {
     res.status(500).json({ error: 'Failed to toggle flag' });
   }
 }

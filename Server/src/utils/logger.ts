@@ -3,7 +3,12 @@
  *
  * Architecture: Utility layer — can be imported by any layer.
  * Security: Redacts passwords, tokens, API keys, and authorization headers.
+ *
+ * Milestone 5: Adds sanitizeRequestId() and withContext() for
+ * distributed tracing with AuraContext.
  */
+
+import type { AuraContext } from '../models/flag.models.js';
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'silent';
 
@@ -108,3 +113,41 @@ export const logger = {
 };
 
 export { redactSensitive, SENSITIVE_FIELDS };
+
+// =============================================================================
+// Milestone 5: Request ID Sanitization & Context-aware Logging
+// =============================================================================
+
+/**
+ * Sanitize a request ID to prevent XSS/injection via user-supplied headers.
+ * Only allows UUID-safe characters: alphanumeric + hyphens.
+ * Truncates to 64 characters max.
+ *
+ * Security: The x-request-id header can be set by the client.
+ * Without sanitization, a malicious request ID could inject
+ * log forging payloads or XSS into monitoring dashboards.
+ */
+export function sanitizeRequestId(rawId: string): string {
+  return rawId.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 64);
+}
+
+/**
+ * Create a child logger pre-bound with AuraContext fields.
+ * Every log entry automatically includes requestId and userId.
+ *
+ * Usage:
+ * ```ts
+ * const log = withContext(ctx);
+ * log.info('Flag evaluated', { key: 'dark-mode' });
+ * // Output: { requestId: 'abc-123', userId: 'user-1', message: 'Flag evaluated', ... }
+ * ```
+ */
+export function withContext(ctx: AuraContext) {
+  const base = { requestId: ctx.requestId, userId: ctx.userId };
+  return {
+    debug: (msg: string, meta?: Record<string, unknown>) => logger.debug(msg, { ...base, ...meta }),
+    info: (msg: string, meta?: Record<string, unknown>) => logger.info(msg, { ...base, ...meta }),
+    warn: (msg: string, meta?: Record<string, unknown>) => logger.warn(msg, { ...base, ...meta }),
+    error: (msg: string, meta?: Record<string, unknown>) => logger.error(msg, { ...base, ...meta }),
+  };
+}

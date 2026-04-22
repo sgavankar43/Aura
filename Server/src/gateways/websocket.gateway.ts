@@ -17,11 +17,16 @@
  * - Clients can ONLY join the room matching their authenticated project
  * - No manual room join — server-assigned only
  *
+ * Milestone 5: Tracks ws_connections_active and ws_messages_relayed metrics.
+ * Logs correlationId when relaying events for distributed tracing.
+ *
  * See: docs/adr/005-websocket-gateway.md
  */
 
 import type { Server as SocketIOServer, Socket } from 'socket.io';
 import type { FlagUpdateEvent, IFlagRepository } from '../models/flag.models.js';
+import { logger } from '../utils/logger.js';
+import { metrics } from '../utils/metrics.js';
 
 /** The Redis channel used for flag updates */
 const FLAG_UPDATE_CHANNEL = 'aura:flags:updates';
@@ -85,6 +90,7 @@ export class WebSocketGateway {
 
   /**
    * Handle new connections: auto-join the authenticated project room.
+   * Milestone 5: Track active WebSocket connections.
    */
   private setupConnectionHandler(): void {
     this.io.on('connection', (socket: Socket) => {
@@ -93,11 +99,20 @@ export class WebSocketGateway {
 
       // Auto-join the project room — no client-side room joining allowed
       socket.join(roomName);
+      metrics.increment('ws_connections_active');
+
+      logger.debug('WebSocket client connected', { projectId, socketId: socket.id });
+
+      socket.on('disconnect', () => {
+        metrics.decrement('ws_connections_active');
+        logger.debug('WebSocket client disconnected', { projectId, socketId: socket.id });
+      });
     });
   }
 
   /**
    * Subscribe to Redis and relay flag updates to Socket.io rooms.
+   * Milestone 5: Logs correlationId for distributed tracing.
    */
   private subscribeToRedis(): void {
     this.redisSubscriber.subscribe(FLAG_UPDATE_CHANNEL);
@@ -118,9 +133,16 @@ export class WebSocketGateway {
         // Emit only to the project room — other projects never see this
         const roomName = `project:${event.projectId}`;
         this.io.to(roomName).emit('flag_updated', event);
+
+        metrics.increment('ws_messages_relayed', { projectId: event.projectId });
+        logger.debug('Flag update relayed via WebSocket', {
+          projectId: event.projectId,
+          featureKey: event.featureKey,
+          correlationId: event.correlationId,
+        });
       } catch {
         // Malformed JSON or unexpected payload — skip silently.
-        // In production, log this as a warning.
+        logger.warn('Failed to parse Redis message on flag update channel');
       }
     });
   }

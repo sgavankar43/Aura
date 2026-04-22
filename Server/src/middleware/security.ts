@@ -15,7 +15,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { v4 as uuidv4 } from 'uuid';
 import { config } from '../config/index.js';
-import { logger } from '../utils/logger.js';
+import { logger, sanitizeRequestId } from '../utils/logger.js';
 
 /**
  * Helmet — sets secure HTTP headers.
@@ -54,10 +54,14 @@ export const rateLimitMiddleware: RequestHandler = rateLimit({
 
 /**
  * Request ID — injects a unique ID for distributed tracing.
+ *
+ * Security (Milestone 5): Sanitizes user-supplied x-request-id headers
+ * to prevent log forging and XSS in monitoring dashboards.
+ * Only allows [a-zA-Z0-9-], truncated to 64 chars.
  */
 export function requestIdMiddleware(req: Request, _res: Response, next: NextFunction): void {
-  const requestId = (req.headers['x-request-id'] as string) || uuidv4();
-  req.headers['x-request-id'] = requestId;
+  const raw = (req.headers['x-request-id'] as string) || uuidv4();
+  req.headers['x-request-id'] = sanitizeRequestId(raw);
   next();
 }
 

@@ -29,6 +29,7 @@ import {
 import { securityAuditMiddleware } from './middleware/securityAudit.js';
 import authRoutes from './routes/auth.routes.js';
 import healthRoutes from './routes/health.routes.js';
+import metricsRoutes from './routes/metrics.routes.js';
 import projectsRoutes from './routes/projects.routes.js';
 
 export function createApp(): express.Application {
@@ -52,6 +53,7 @@ export function createApp(): express.Application {
   app.use(healthRoutes);
   app.use('/api/auth', authRoutes);
   app.use('/api/projects', projectsRoutes);
+  app.use('/api/metrics', metricsRoutes);
 
   // --- Error Handling (must be last) ---
   app.use(notFoundHandler);

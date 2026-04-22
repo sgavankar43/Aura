@@ -49,6 +49,8 @@ export interface FlagUpdateEvent {
   source: string;
   /** ISO 8601 timestamp */
   timestamp: string;
+  /** Correlation ID for distributed tracing (Milestone 5) */
+  correlationId?: string;
 }
 
 /** Callback for flag update notifications */

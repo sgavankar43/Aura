@@ -50,6 +50,22 @@ export interface FlagState {
   updatedBy: string | null;
 }
 
+// --- Request Context for Observability ---
+
+/**
+ * Propagation context threaded through the service layer.
+ * Enables distributed tracing: every log entry, metric, and Pub/Sub event
+ * can be correlated back to the originating HTTP request.
+ *
+ * Milestone 5: Advanced Telemetry & Request Correlation.
+ */
+export interface AuraContext {
+  /** Unique request identifier for distributed tracing */
+  requestId: string;
+  /** Authenticated user ID (if available) */
+  userId?: string;
+}
+
 // --- Flag Evaluation Result ---
 
 export interface FlagEvaluation {
@@ -140,6 +156,8 @@ export interface FlagUpdateEvent {
   source: string;
   /** ISO 8601 timestamp of the change */
   timestamp: string;
+  /** Links this event back to the originating HTTP request (Milestone 5) */
+  correlationId: string;
 }
 
 // --- Pub/Sub Service Interface ---
